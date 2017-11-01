@@ -42,6 +42,6 @@ function mvn {
 	elif [ -x '../mvnw' ]; then
 		../mvnw $@
 	else
-		bash -c "mvn $@"
+		bash -c "mvn $*"
 	fi
 }

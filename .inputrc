@@ -1,0 +1,4 @@
+# https://macimproved.wordpress.com/2010/01/04/fix-page-updown-home-end-in-terminal/
+
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward

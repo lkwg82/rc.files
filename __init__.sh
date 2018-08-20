@@ -1,5 +1,12 @@
 #!/bin/bash
 
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='darwin'
+fi
 
 source ~/.bashrc.d/bash.sh
 source ~/.bashrc.d/gradle.sh

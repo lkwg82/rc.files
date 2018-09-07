@@ -8,6 +8,7 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='darwin'
 fi
 
+source ~/.bashrc.d/init_tools.sh
 source ~/.bashrc.d/bash.sh
 source ~/.bashrc.d/gradle.sh
 source ~/.bashrc.d/git.sh

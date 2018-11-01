@@ -17,7 +17,7 @@ source ~/.bashrc.d/minishift.sh
 
 function linkFile {
   local file=$1
-     
+
   if [ ! -f "$HOME/$file" ]; then
     echo "first time linked '$file'"
     ln -vfs ~/.bashrc.d/$file ~

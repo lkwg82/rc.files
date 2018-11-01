@@ -13,7 +13,7 @@ source ~/.bashrc.d/bash.sh
 source ~/.bashrc.d/gradle.sh
 source ~/.bashrc.d/git.sh
 source ~/.bashrc.d/maven.sh
-source ~/.bashrc.d/minishift.sh
+source ~/.bashrc.d/openshift.sh
 
 function linkFile {
   local file=$1

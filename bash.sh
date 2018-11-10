@@ -16,3 +16,5 @@ function cdmkdir {
 	local dir=$1 || echo "ERROR missing argument"
 	mkdir -p $dir && cd $dir
 }
+
+export PATH=~/bin:$PATH

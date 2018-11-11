@@ -8,12 +8,12 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='darwin'
 fi
 
-source ~/.bashrc.d/init_tools.sh &
-source ~/.bashrc.d/bash.sh &
-source ~/.bashrc.d/gradle.sh &
-source ~/.bashrc.d/git.sh &
-source ~/.bashrc.d/maven.sh &
-source ~/.bashrc.d/openshift.sh &
+source ~/.bashrc.d/init_tools.sh
+source ~/.bashrc.d/bash.sh
+source ~/.bashrc.d/gradle.sh
+source ~/.bashrc.d/git.sh
+source ~/.bashrc.d/maven.sh
+source ~/.bashrc.d/openshift.sh
 
 function linkFile {
   local file=$1
@@ -24,5 +24,5 @@ function linkFile {
   fi
 }
 
-linkFile .inputrc &
-linkFile .vimrc &
+linkFile .inputrc
+linkFile .vimrc

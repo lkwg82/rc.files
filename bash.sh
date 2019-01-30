@@ -14,7 +14,7 @@ alias ls='ls -GFh'
 # create dir and cd
 function cdmkdir {
 	local dir=$1 || echo "ERROR missing argument"
-	mkdir -p $dir && cd $dir
+	mkdir -p ${dir} && cd ${dir}
 }
 
 export PATH=~/bin:$PATH

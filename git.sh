@@ -5,19 +5,19 @@ set -o pipefail
 # https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 
 if [ ${platform} = "darwin" ]; then
-    if [ ! -f /usr/local/etc/bash_completion ]; then
+    if [[ ! -f /usr/local/etc/bash_completion ]]; then
         echo "installing first time git bash-completion"
         brew install git bash-completion
     fi
 fi
 
 if [ ${platform} = "darwin" ]; then
-    if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
+    if [[ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]]; then
       . `brew --prefix`/etc/bash_completion.d/git-completion.bash
     fi
 fi
 
-if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
+if [[ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]]; then
   . /usr/local/etc/bash_completion.d/git-prompt.sh
   export GIT_PS1_SHOWCOLORHINTS=true
   export GIT_PS1_SHOWDIRTYSTATE=true

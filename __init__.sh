@@ -18,9 +18,9 @@ source ~/.bashrc.d/openshift.sh
 function linkFile {
   local file=$1
 
-  if [ ! -f "$HOME/$file" ]; then
+  if [[ ! -f "$HOME/$file" ]]; then
     echo "first time linked '$file'"
-    ln -vfs ~/.bashrc.d/$file ~
+    ln -vfs ~/.bashrc.d/${file} ~
   fi
 }
 

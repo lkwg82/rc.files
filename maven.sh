@@ -37,9 +37,9 @@ alias mvn_doxygen='mvn com.soebes.maven.plugins.dmg:doxygen-maven-plugin:report 
 
 # this wrapper function uses local mvn wrapper command if exists
 function mvn {
-	if [ -x 'mvnw' ]; then
+	if [[ -x 'mvnw' ]]; then
 		./mvnw $@
-	elif [ -x '../mvnw' ]; then
+	elif [[ -x '../mvnw' ]]; then
 		../mvnw $@
 	else
 		bash -c "mvn $*"

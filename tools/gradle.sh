@@ -6,7 +6,7 @@ function __gradle_bash_completion {
         brew install gradle-completion;
     fi
 
-    . $(brew --prefix)/etc/bash_completion
+    . "$(brew --prefix)/etc/bash_completion"
 }
 
 # this wrapper function uses local gradle wrapper command if exists

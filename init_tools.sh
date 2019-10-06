@@ -6,7 +6,7 @@ function initMacosX {
     ssh-add -K
 }
 
-if [ ${platform} = "darwin" ]; then
+if [ "${platform}" = "darwin" ]; then
    if ! command -v  brew > /dev/null; then
        echo "install brew -> https://brew.sh"
    fi

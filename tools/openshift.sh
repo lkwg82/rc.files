@@ -2,8 +2,7 @@
 
 # minishift
 
-which minishift > /dev/null
-if [[ $? -eq 0 ]]; then
+if ! command -v  minishift > /dev/null; then
     minishift completion bash > ~/.minishift-completion
     if [[ ${platform} = "darwin" ]]; then
         sed -e 's|__ltrim|#__ltrim|' -i '.bak' ~/.minishift-completion
@@ -24,8 +23,7 @@ if [[ $? -eq 0 ]]; then
 fi
 
 # openshift client
-which oc > /dev/null
-if [[ $? -eq 0 ]]; then
+if ! command -v  oc > /dev/null; then
     oc completion bash > ~/.openshift-client-completion
     source ~/.openshift-client-completion
 fi

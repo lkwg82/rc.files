@@ -2,8 +2,6 @@
 
 # https://flutter.dev/docs/get-started/install/linux
 
-set -x
-
 function flutter_install() {
   mkdir -p "$HOME/development/tools/"
   if [[ ${platform} = "darwin" ]]; then
@@ -36,10 +34,9 @@ function flutter_install() {
   popd
 
   flutter precache
+  flutter doctor
 }
 
 if [[ -d $HOME/development/tools/flutter/bin ]]; then
   export PATH=$PATH:$HOME/development/tools/flutter/bin
 fi
-
-set +x

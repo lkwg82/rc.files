@@ -52,7 +52,11 @@ if [[ ${platform} == "darwin" ]]; then
     brew install fswatch
   fi
 
-  fswatch -0 -r . |
-    xargs -0 -n1 -I{} git diff --name-only |
-    xargs -n1 -I{} bash -c 'commitAndPush {}'
+  function auto-commit-and-push() {
+    echo "waiting for changes ... "
+    fswatch -0 -r . |
+      xargs -0 -n1 -I{} git diff --name-only |
+      xargs -n1 -I{} bash -c 'commitAndPush {}'
+  }
+  export -f auto-commit-and-push
 fi

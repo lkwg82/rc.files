@@ -23,8 +23,8 @@ fi
 # prompt
 
 if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
-    echo "installing first time bash-git-prompt"
-    brew install bash-git-prompt
+  echo "installing first time bash-git-prompt"
+  brew install bash-git-prompt
 fi
 
 if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
@@ -33,4 +33,26 @@ if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
   GIT_PROMPT_THEME=Solarized
   GIT_PROMPT_SHOW_UPSTREAM=1
   source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+fi
+
+function commitAndPush() {
+  local changedFile=$1
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+
+  echo "-- handle event "
+  git commit -m 'auto commit' "$changedFile" &&
+    git push --set-upstream origin "$branch"
+}
+
+export -f commitAndPush
+set -x
+if [[ ${platform} == "darwin" ]]; then
+  if ! command -v fswatch >/dev/null; then
+    echo "install fswatch"
+    brew install fswatch
+  fi
+
+  fswatch -0 -r . |
+    xargs -0 -n1 -I{} git diff --name-only |
+    xargs -n1 -I{} bash -c 'commitAndPush {}'
 fi

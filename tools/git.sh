@@ -45,7 +45,6 @@ function commitAndPush() {
 }
 
 export -f commitAndPush
-set -x
 if [[ ${platform} == "darwin" ]]; then
   if ! command -v fswatch >/dev/null; then
     echo "install fswatch"

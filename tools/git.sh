@@ -44,12 +44,13 @@ function commitAndPush() {
   if [[ $branch == 'master' ]]; then
     echo "skipping, because on master"
   else
-    git commit -m 'auto commit' "$changedFile" &&
+    git commit -m "auto commit" "$changedFile" &&
       git push --set-upstream origin "$branch"
   fi
 }
 
 export -f commitAndPush
+
 if [[ ${platform} == "darwin" ]]; then
   if ! command -v fswatch >/dev/null; then
     echo "install fswatch"
@@ -58,6 +59,7 @@ if [[ ${platform} == "darwin" ]]; then
 
   function auto-commit-and-push() {
     local branch=$(git rev-parse --abbrev-ref HEAD)
+
     echo "waiting for changes (on branch '$branch') ... "
     fswatch -0 -r . |
       xargs -0 -n1 -I{} git diff --name-only |

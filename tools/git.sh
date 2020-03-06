@@ -40,8 +40,13 @@ function commitAndPush() {
   local branch=$(git rev-parse --abbrev-ref HEAD)
 
   echo "-- handle event "
-  git commit -m 'auto commit' "$changedFile" &&
-    git push --set-upstream origin "$branch"
+
+  if [[ $branch == 'master' ]]; then
+    echo "skipping, because on master"
+  else
+    git commit -m 'auto commit' "$changedFile" &&
+      git push --set-upstream origin "$branch"
+  fi
 }
 
 export -f commitAndPush
@@ -52,7 +57,8 @@ if [[ ${platform} == "darwin" ]]; then
   fi
 
   function auto-commit-and-push() {
-    echo "waiting for changes ... "
+    local branch=$(git rev-parse --abbrev-ref HEAD)
+    echo "waiting for changes (on branch '$branch') ... "
     fswatch -0 -r . |
       xargs -0 -n1 -I{} git diff --name-only |
       xargs -n1 -I{} bash -c 'commitAndPush {}'

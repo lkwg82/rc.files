@@ -18,3 +18,7 @@ function cdmkdir {
 }
 
 export PATH=~/bin:$PATH
+
+# https://github.com/jbarlow83/OCRmyPDF
+# https://medium.com/@thucnc/convert-a-scanned-pdf-to-text-with-linux-command-line-using-ocrmypdf-1a2e8d50277f
+alias docker_ocrmypdf='docker run --rm  -i --user "$(id -u):$(id -g)" --workdir /data -v "$PWD:/data" jbarlow83/ocrmypdf'

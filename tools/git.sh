@@ -36,7 +36,7 @@ if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
 fi
 
 function commitAndPush() {
-  local changedFile=$1
+  local changedFiles="$@"
   local branch=$(git rev-parse --abbrev-ref HEAD)
 
   echo "-- handle event "
@@ -44,7 +44,7 @@ function commitAndPush() {
   if [[ $branch == 'master' ]]; then
     echo "skipping, because on master"
   else
-    git commit -m "auto commit" "$changedFile" &&
+    git commit -m "auto commit" "$changedFiles" &&
       git push --set-upstream origin "$branch"
   fi
 }
@@ -61,9 +61,13 @@ if [[ ${platform} == "darwin" ]]; then
     local branch=$(git rev-parse --abbrev-ref HEAD)
 
     echo "waiting for changes (on branch '$branch') ... "
-    fswatch -0 -r . |
-      xargs -0 -n1 -I{} git diff --name-only |
-      xargs -n1 -I{} bash -c 'commitAndPush {}'
+    while (true); do
+      fswatch --latency 0.2 --one-event --print0 --recursive . |
+        xargs -0 -I{} git diff --name-only |
+        sort -u |
+        xargs |
+        xargs -I{} bash -c 'commitAndPush {}'
+    done
   }
   export -f auto-commit-and-push
 fi

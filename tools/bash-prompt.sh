@@ -5,6 +5,7 @@ set -o pipefail
 # Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export PROMPT_DIRTRIM=1
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\e[38;5;99m\]\[\e[1m\]\n\[\033[1;34m\]$(date +%H:%M)\[\033[0;0m\]\e[0m \$ '
 
 if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
   echo "installing first time bash-git-prompt"

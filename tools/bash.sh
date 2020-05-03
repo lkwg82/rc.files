@@ -3,7 +3,7 @@
 set -o pipefail
 
 # create temp dir and cd
-alias cdtmp='dir="$(tempfile).d" && mkdir -p $dir && cd $dir'
+alias cdtmp='dir="$(mktemp -d)" && cd $dir'
 
 alias ll='ls -al'
 

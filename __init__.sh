@@ -1,11 +1,10 @@
 #!/bin/bash
 
-
 platform='unknown'
 unamestr=$(uname)
-if [[ "$unamestr" == 'Linux' ]]; then
+if [[ $unamestr == 'Linux' ]]; then
    platform='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
+elif [[ $unamestr == 'Darwin' ]]; then
    # shellcheck disable=SC2034
    platform='darwin'
 fi
@@ -21,7 +20,7 @@ pushd ~/.bashrc.d || exitAndShow
 source init_tools.sh
 
 for file in tools/*.sh; do
-  source $file
+  source "$file"
 done
 set +x
 

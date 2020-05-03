@@ -4,6 +4,9 @@ if ! command -v  terraform > /dev/null; then
   return
 fi
 
+# enable completion
+complete -C $(command -v terraform) terraform
+
 alias tf_apply='terraform apply -auto-approve'
 
 # this fixes the output of ansi colors

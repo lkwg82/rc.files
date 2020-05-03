@@ -2,6 +2,10 @@
 
 set -o pipefail
 
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_DIRTRIM=1
+
 if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
   echo "installing first time bash-git-prompt"
   brew install bash-git-prompt

@@ -1,6 +1,11 @@
 #!/bin/bash
 
 set -o pipefail
+
+if ! command -v git > /dev/null; then
+  return
+fi
+
 # https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 
 # completion
@@ -16,24 +21,7 @@ if [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
   . "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
 fi
 
-if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
-  . /usr/local/etc/bash_completion.d/git-prompt.sh
-fi
-
-# prompt
-
-if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
-  echo "installing first time bash-git-prompt"
-  brew install bash-git-prompt
-fi
-
-if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
-  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
-  GIT_PROMPT_ONLY_IN_REPO=1
-  GIT_PROMPT_THEME=Solarized
-  GIT_PROMPT_SHOW_UPSTREAM=1
-  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-fi
+# HINT: for prompt see bash-prompt.sh
 
 function commitAndPush() {
   local changedFile="$1"

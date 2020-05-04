@@ -1,7 +1,12 @@
 #!/bin/bash
 
-if ! command -v  terraform > /dev/null; then
+if ! command -v terraform >/dev/null; then
   return
+fi
+
+if ! command -v tflint >/dev/null; then
+  echo "installint tflint"
+  brew install tflint
 fi
 
 # enable completion

@@ -4,6 +4,7 @@
 
 function flutter_install() {
   mkdir -p "$HOME/development/tools/"
+  # shellcheck disable=SC2154
   if [[ ${platform} = "darwin" ]]; then
     local url="https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.12.13+hotfix.5-stable.zip"
   else
@@ -12,7 +13,7 @@ function flutter_install() {
 
   pushd "$HOME/development/tools" || return
 
-  read -n1 -p "clean flutter dir and redownload and extract fresh install [y/n]? " yn
+  read -r -n1 -p "clean flutter dir and redownload and extract fresh install [y/n]? " yn
     case $yn in
         [Yy]* )
           wget -c ${url}
@@ -20,18 +21,19 @@ function flutter_install() {
             rm -rf flutter
           fi
 
+          # shellcheck disable=SC2155
           local file=$(basename ${url})
           if [[ ${platform} = "darwin" ]]; then
-            unzip ${file}
+            unzip "${file}"
           else
-            tar -xvJf ${file}
+            tar -xvJf "${file}"
           fi
           ;;
         [Nn]* ) echo "";;
         * ) echo "Please answer yes or no.";;
     esac
 
-  popd
+  popd || exit
 
   flutter precache
   flutter doctor

@@ -10,7 +10,7 @@ if ! command -v tflint >/dev/null; then
 fi
 
 # enable completion
-complete -C $(command -v terraform) terraform
+complete -C "$(command -v terraform)" terraform
 
 alias tf_apply='terraform apply -auto-approve'
 

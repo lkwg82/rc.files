@@ -5,6 +5,7 @@ set -o pipefail
 # Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export PROMPT_DIRTRIM=1
+# shellcheck disable=SC2025
 export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\e[38;5;99m\]\[\e[1m\]\n\[\033[1;34m\]$(date +%H:%M)\[\033[0;0m\]\e[0m \$ '
 
 if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
@@ -13,13 +14,14 @@ if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
 fi
 
 if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
-  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+  # shellcheck disable=SC2155
+  export __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
 
   # configs
   # see https://github.com/magicmonty/bash-git-prompt#all-configs-for-bashrc
-  GIT_PROMPT_ONLY_IN_REPO=1
-  GIT_PROMPT_THEME=Solarized
-  GIT_PROMPT_SHOW_UPSTREAM=1
+  export GIT_PROMPT_ONLY_IN_REPO=1
+  export GIT_PROMPT_THEME=Solarized
+  export GIT_PROMPT_SHOW_UPSTREAM=1
 
   function prompt_callback() {
     # combine with terraform
@@ -28,6 +30,7 @@ if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
     fi
   }
 
+  # shellcheck disable=SC1090
   source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
 fi
 
@@ -50,6 +53,7 @@ if command -v terraform >/dev/null; then
         OLD_PS1=${PS1}
       fi
 
+      # shellcheck disable=SC2025
       PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\e[38;5;99m\]\[\e[1m\]\n\[\033[1;34m\]$(date +%H:%M)\[\033[0;0m\] [workspace:$(terraform workspace show 2>/dev/null || echo "<error>")]\e[0m \$ '
     else
       # recover old prompt

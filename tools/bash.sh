@@ -2,10 +2,10 @@
 
 set -o pipefail
 
-export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
-export HISTSIZE=100000                   # big big history
-export HISTFILESIZE=100000               # big big history
-shopt -s histappend                      # append to history, don't overwrite it
+export HISTCONTROL=ignoredups:erasedups # no duplicate entries
+export HISTSIZE=100000                  # big big history
+export HISTFILESIZE=100000              # big big history
+shopt -s histappend                     # append to history, don't overwrite it
 
 # create temp dir and cd
 alias cdtmp='dir="$(mktemp -d)" && cd $dir'
@@ -17,9 +17,10 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 alias ls='ls -GFh'
 
 # create dir and cd
-function cdmkdir {
-	local dir=$1 || echo "ERROR missing argument"
-	mkdir -p "${dir}" && cd "${dir}"
+function cdmkdir() {
+  local dir=$1 || echo "ERROR missing argument"
+  # shellcheck disable=SC2164
+  mkdir -p "${dir}" && cd "${dir}"
 }
 
 export PATH=~/bin:$PATH

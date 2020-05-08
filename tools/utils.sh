@@ -1,6 +1,12 @@
 #!/bin/bash
 
-if ! command -v pre-commit > /dev/null; then
-  echo "installing pre-commit"
-  brew install pre-commit
-fi
+function __lazy_install() {
+  local cmd=$1
+  if ! command -v "$cmd" >/dev/null; then
+    echo "installing '$cmd'"
+    brew install "$cmd"
+  fi
+}
+
+__lazy_install pre-commit
+__lazy_install shellcheck

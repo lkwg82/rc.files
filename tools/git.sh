@@ -2,7 +2,7 @@
 
 set -o pipefail
 
-if ! command -v git > /dev/null; then
+if ! command -v git >/dev/null; then
   return
 fi
 
@@ -18,6 +18,7 @@ if [ ! -f /usr/local/etc/bash_completion ]; then
 fi
 
 if [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
+  # shellcheck disable=SC1090
   . "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
 fi
 
@@ -25,6 +26,7 @@ fi
 
 function commitAndPush() {
   local changedFile="$1"
+  # shellcheck disable=SC2155
   local branch=$(git rev-parse --abbrev-ref HEAD)
 
   echo "-- handle event "
@@ -38,6 +40,7 @@ function commitAndPush() {
 
 export -f commitAndPush
 
+# shellcheck disable=SC2154
 if [[ ${platform} == "darwin" ]]; then
   if ! command -v fswatch >/dev/null; then
     echo "install fswatch"
@@ -45,6 +48,7 @@ if [[ ${platform} == "darwin" ]]; then
   fi
 
   function auto-commit-and-push() {
+    # shellcheck disable=SC2155
     local branch=$(git rev-parse --abbrev-ref HEAD)
 
     echo "waiting for changes (on branch '$branch') ... "

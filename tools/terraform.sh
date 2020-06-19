@@ -13,6 +13,7 @@ fi
 complete -C "$(command -v terraform)" terraform
 
 alias tf_apply='terraform apply -auto-approve'
+alias tf_plan='terraform plan | grep -E "\~|\-|\+\s"'
 
 # this fixes the output of ansi colors
 # see https://github.com/hashicorp/terraform/issues/21779

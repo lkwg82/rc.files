@@ -23,6 +23,18 @@ function tf_plan {
   grep '  #' "$output"
 }
 
+function tf_workspace {
+  local workspace="$1"
+
+  if [[ -z $workspace ]]; then
+    echo "missing workspace name"
+    exit 1
+  fi
+
+  terraform workspace list > /dev/null || terraform init
+  terraform workspace select "$workspace" || terraform workspace new "$workspace"
+}
+
 # this fixes the output of ansi colors
 # see https://github.com/hashicorp/terraform/issues/21779
 alias tf_state_show='terraform state show -no-color'

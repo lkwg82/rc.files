@@ -30,3 +30,8 @@ repos:
         language: node
         types: [ markdown ]
         minimum_pre_commit_version: 0.15.0
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.39.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs

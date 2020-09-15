@@ -17,7 +17,12 @@ alias tf_apply='terraform apply -auto-approve'
 function tf_plan {
   # shellcheck disable=SC2155
   local output=$(mktemp)
-  terraform plan > "$output"
+  terraform plan | tee "$output"
+  echo ""
+  echo ""
+  echo " --- reformatting plan ---"
+  echo ""
+  echo ""
   grep -E "\~|\-|\+\s" "$output"
   echo "----- summary: ----";
   grep '  #' "$output"

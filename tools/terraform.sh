@@ -31,8 +31,17 @@ function tf_workspace {
     exit 1
   fi
 
-  terraform workspace list > /dev/null || terraform init
-  terraform workspace select "$workspace" || terraform workspace new "$workspace"
+  echo "... check workspaces"
+  if ! terraform workspace list > /dev/null; then
+    echo "... need to init"
+    terraform init
+  fi
+
+  echo "... try to select workspace '$workspace'"
+  if ! terraform workspace select "$workspace"; then
+    echo "... need to create workspace '$workspace'"
+    terraform workspace new "$workspace"
+  fi
 }
 
 # this fixes the output of ansi colors

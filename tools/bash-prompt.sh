@@ -26,7 +26,7 @@ if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
   function prompt_callback() {
     # combine with terraform
     if command -v terraform >/dev/null && [ -d .terraform ]; then
-      echo " [\[\e[1m\]workspace\e[0m:$(cat .terraform/environment 2>/dev/null || echo "<error>")]"
+      echo " [\[\e[1m\]workspace\e[0m:$(cat .terraform/environment 2>/dev/null || echo "default")]"
     fi
   }
 

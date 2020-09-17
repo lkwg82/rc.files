@@ -33,7 +33,7 @@ function tf_workspace {
 
   if [[ -z $workspace ]]; then
     echo "missing workspace name"
-    exit 1
+    return
   fi
 
   echo "... check workspaces"

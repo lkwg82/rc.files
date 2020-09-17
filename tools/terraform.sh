@@ -47,6 +47,8 @@ function tf_workspace {
     echo "... need to create workspace '$workspace'"
     terraform workspace new "$workspace"
   fi
+
+  terraform init # since terraform v0.13
 }
 
 # this fixes the output of ansi colors

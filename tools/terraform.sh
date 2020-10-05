@@ -51,6 +51,46 @@ function tf_workspace {
   terraform init # since terraform v0.13
 }
 
+function tf_pin_provider_versions {
+
+local versions="provider_required_versions.tf"
+  if [[ -f $versions ]]; then
+    echo "WARN file '$versions' already existing ... skip"
+    return
+  fi
+
+cat <<EOF > $versions.tmp
+terraform {
+  required_providers {
+EOF
+
+  for url in $(terraform providers \
+    | grep registry.terraform \
+    | sed -e 's#.*provider\[\(.*\)\].*#\1#' \
+    | sort -u \
+    | sed -e 's#\(registry.terraform.io\)/\(.*\)#https://\1/v1/providers/\2/versions#' ); do
+    provider=$(echo -n "$url" | sed -e 's#.*/providers/##; s#/versions##')
+    latestVersion=$(curl "$url" | jq  -r '.versions[] | .version' | sort | tail -n1)
+
+    echo "$url"
+    echo "provider $provider"
+    echo "version: $latestVersion"
+
+    cat <<EOF >> $versions.tmp
+    $(echo -n "$provider" | cut -d/ -f2) = {
+      source  = "$provider"
+      version = "~> $latestVersion"
+    }
+EOF
+  done
+
+cat <<EOF >> $versions.tmp
+   }
+}
+EOF
+  mv -v $versions.tmp $versions
+}
+
 # this fixes the output of ansi colors
 # see https://github.com/hashicorp/terraform/issues/21779
 alias tf_state_show='terraform state show -no-color'

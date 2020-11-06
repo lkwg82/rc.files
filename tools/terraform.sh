@@ -79,7 +79,7 @@ EOF
     cat <<EOF >> $versions.tmp
     $(echo -n "$provider" | cut -d/ -f2) = {
       source  = "$provider"
-      version = "~> $latestVersion"
+      version = "$latestVersion"
     }
 EOF
   done

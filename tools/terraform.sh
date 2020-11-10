@@ -53,7 +53,7 @@ function tf_workspace {
 
 function tf_pin_provider_versions {
 
-local versions="provider_required_versions.tf"
+local versions="versions.tf"
   if [[ -f $versions ]]; then
     echo "WARN file '$versions' already existing ... skip"
     return

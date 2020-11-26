@@ -17,15 +17,30 @@ alias tf_apply='terraform apply -auto-approve'
 function tf_plan {
   # shellcheck disable=SC2155
   local output=$(mktemp)
-  terraform plan | tee "$output"
-  echo ""
-  echo ""
-  echo " --- reformatting plan ---"
-  echo ""
-  echo ""
-  grep -E "\~|\-|\+\s" "$output"
-  echo "----- summary: ----";
-  grep '  #' "$output"
+  terraform plan -out "$output.plan" | tee "$output"
+  echo "... transforming into json ..."
+  terraform show -json "$output.plan" > "$output.json"
+
+  jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "create") | .address' -r | sort > "$output.create"
+  # shellcheck disable=SC1083
+  if [[ $(wc -l "$output".create | awk {'print $1'} ) -gt 0 ]]; then
+    printf "\e[92m\e[1mElements to be created .\e[0m\n"
+    sed -e 's#^#+ #' "$output.create"
+  fi
+
+  jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "delete") | .address' -r | sort > "$output.delete"
+  # shellcheck disable=SC1083
+  if [[ $(wc -l "$output".delete | awk {'print $1'} ) -gt 0 ]]; then
+    printf "\e[91m\e[1mElements to be deleted (or recreated).\e[0m\n"
+    sed -e 's#^#- #'  "$output.delete"
+  fi
+
+  jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "update") | .address' -r | sort > "$output.update"
+  # shellcheck disable=SC1083
+  if [[ $(wc -l "$output".update | awk {'print $1'} ) -gt 0 ]]; then
+    printf "\e[93m\e[1mElements to be updated .\e[0m\n"
+    sed -e 's#^# #'  "$output.update"
+  fi
 }
 
 function tf_workspace {

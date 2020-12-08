@@ -1,7 +1,9 @@
 #!/bin/bash
 
-if ! command -v terraform >/dev/null; then
-  return
+if ! command -v tfenv >/dev/null; then
+  echo "install tfenv"
+  brew install tfenv
+  tfenv install latest
 fi
 
 if ! command -v tflint >/dev/null; then

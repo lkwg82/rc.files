@@ -16,6 +16,46 @@ complete -C "$(command -v terraform)" terraform
 
 alias tf_apply='terraform apply -auto-approve'
 
+function tf_pin_provider_versions {
+
+local versions="versions.tf"
+  if [[ -f $versions ]]; then
+    echo "WARN file '$versions' already existing ... skip"
+    return
+  fi
+
+cat <<EOF > $versions.tmp
+terraform {
+  required_providers {
+EOF
+
+  for url in $(terraform providers \
+    | grep registry.terraform \
+    | sed -e 's#.*provider\[\(.*\)\].*#\1#' \
+    | sort -u \
+    | sed -e 's#\(registry.terraform.io\)/\(.*\)#https://\1/v1/providers/\2/versions#' ); do
+    provider=$(echo -n "$url" | sed -e 's#.*/providers/##; s#/versions##')
+    latestVersion=$(curl "$url" | jq  -r '.versions[] | .version' | sort | tail -n1)
+
+    echo "$url"
+    echo "provider $provider"
+    echo "version: $latestVersion"
+
+    cat <<EOF >> $versions.tmp
+    $(echo -n "$provider" | cut -d/ -f2) = {
+      source  = "$provider"
+      version = "$latestVersion"
+    }
+EOF
+  done
+
+cat <<EOF >> $versions.tmp
+   }
+}
+EOF
+  mv -v $versions.tmp $versions
+}
+
 function tf_plan {
   # shellcheck disable=SC2155
   local output=$(mktemp)
@@ -66,46 +106,6 @@ function tf_workspace {
   fi
 
   terraform init # since terraform v0.13
-}
-
-function tf_pin_provider_versions {
-
-local versions="versions.tf"
-  if [[ -f $versions ]]; then
-    echo "WARN file '$versions' already existing ... skip"
-    return
-  fi
-
-cat <<EOF > $versions.tmp
-terraform {
-  required_providers {
-EOF
-
-  for url in $(terraform providers \
-    | grep registry.terraform \
-    | sed -e 's#.*provider\[\(.*\)\].*#\1#' \
-    | sort -u \
-    | sed -e 's#\(registry.terraform.io\)/\(.*\)#https://\1/v1/providers/\2/versions#' ); do
-    provider=$(echo -n "$url" | sed -e 's#.*/providers/##; s#/versions##')
-    latestVersion=$(curl "$url" | jq  -r '.versions[] | .version' | sort | tail -n1)
-
-    echo "$url"
-    echo "provider $provider"
-    echo "version: $latestVersion"
-
-    cat <<EOF >> $versions.tmp
-    $(echo -n "$provider" | cut -d/ -f2) = {
-      source  = "$provider"
-      version = "$latestVersion"
-    }
-EOF
-  done
-
-cat <<EOF >> $versions.tmp
-   }
-}
-EOF
-  mv -v $versions.tmp $versions
 }
 
 # this fixes the output of ansi colors

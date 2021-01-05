@@ -98,11 +98,10 @@ function tf_workspace {
     export TF_IN_AUTOMATION="true"
   fi
 
-  echo -n " try to select workspace '$workspace' ... "
+  echo " try to select workspace '$workspace' ... "
   if terraform workspace select "$workspace" 2>/dev/null; then
-    echo "selected"
+    echo -n ""
   else
-    echo "creating"
     if ! terraform workspace new "$workspace"; then
       echo "failed"
     fi

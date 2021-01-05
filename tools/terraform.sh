@@ -93,16 +93,19 @@ function tf_workspace {
     return
   fi
 
-  echo "... check workspaces"
-  if ! terraform workspace list > /dev/null; then
-    echo "... need to init"
-    terraform init
+  # suppress verbose outputs
+  if [[ -z $TF_IN_AUTOMATION ]]; then
+    export TF_IN_AUTOMATION="true"
   fi
 
-  echo "... try to select workspace '$workspace'"
-  if ! terraform workspace select "$workspace"; then
-    echo "... need to create workspace '$workspace'"
-    terraform workspace new "$workspace"
+  echo -n " try to select workspace '$workspace' ... "
+  if terraform workspace select "$workspace" 2>/dev/null; then
+    echo "selected"
+  else
+    echo "creating"
+    if ! terraform workspace new "$workspace"; then
+      echo "failed"
+    fi
   fi
 
   terraform init # since terraform v0.13

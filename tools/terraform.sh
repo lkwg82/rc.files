@@ -89,7 +89,7 @@ function tf_workspace {
   local workspace="$1"
 
   if [[ -z $workspace ]]; then
-    echo "missing workspace name"
+    terraform workspace list
     return
   fi
 

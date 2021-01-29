@@ -107,7 +107,7 @@ function tf_workspace {
     fi
   fi
 
-  terraform init # since terraform v0.13
+  terraform init -upgrade # since terraform v0.13
 }
 
 function tf___list_empty_workspaces {

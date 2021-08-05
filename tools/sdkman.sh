@@ -7,5 +7,8 @@ if ! test -d ~/.sdkman; then
   sed -e 's#sdkman_auto_env=false#sdkman_auto_env=true#' -i ~/.sdkman/etc/config
 fi
 
+export SDKMAN_DIR="/home/lars/.sdkman"
 # shellcheck disable=SC1090
-. ~/.sdkman/bin/sdkman-init.sh
+if [[ -s "/home/lars/.sdkman/bin/sdkman-init.sh" ]]; then
+  source ~/.sdkman/bin/sdkman-init.sh
+fi

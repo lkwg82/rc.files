@@ -15,7 +15,7 @@ if [[ ${platform} == "darwin" ]]; then
 fi
 
 if [[ ${platform} == "linux" ]]; then
-  export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+  export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
   if ! command -v brew >/dev/null; then
     echo "install brew -> https://brew.sh/"
   fi

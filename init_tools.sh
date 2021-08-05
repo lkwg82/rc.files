@@ -17,7 +17,7 @@ fi
 if [[ ${platform} == "linux" ]]; then
   export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
   if ! command -v brew >/dev/null; then
-    echo "install brew -> https://linuxbrew.sh/"
+    echo "install brew -> https://brew.sh/"
   fi
 fi
 

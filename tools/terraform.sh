@@ -85,6 +85,12 @@ function tf_plan {
   fi
 }
 
+function tf_update_latest_terraform_version {
+  local lastVersion=$(tfenv list-remote | grep -E "\.[0-9]$" | head -n1)
+  tfenv install "$lastVersion"
+  tfenv use "$lastVersion"
+}
+
 function tf_workspace {
   local workspace="$1"
 

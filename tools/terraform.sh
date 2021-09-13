@@ -59,9 +59,18 @@ EOF
 function tf_plan {
   # shellcheck disable=SC2155
   local output=$(mktemp)
+
+  if ! terraform validate; then
+    echo "stopped on error"
+    return
+  fi
+
   terraform plan -out "$output.plan" | tee "$output"
+
+
   echo "... transforming into json ..."
   terraform show -json "$output.plan" > "$output.json"
+
 
   jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "create") | .address' -r | sort > "$output.create"
   # shellcheck disable=SC1083

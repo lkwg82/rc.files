@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function __gradle_bash_completion() {
-  if [[ ! -f $(brew --prefix)/etc/bash_completion ]]; then
+  if [[ ! -f $(brew --prefix)/etc/bash_completion.d/gradle ]]; then
     echo "installing gradle bash completion"
     brew install gradle-completion
   fi
 
   # shellcheck disable=SC1090
-  . "$(brew --prefix)/etc/bash_completion"
+  . "$(brew --prefix)/etc/bash_completion.d/gradle"
 }
 
 _gradle_path=$(command -v gradle)

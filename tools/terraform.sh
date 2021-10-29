@@ -95,7 +95,7 @@ function tf_plan {
 }
 
 function tf_update_latest_terraform_version {
-  local lastVersion=$(tfenv list-remote | grep -E "\.[0-9]$" | head -n1)
+  local lastVersion=$(tfenv list-remote | grep -E "\.[0-9]+$" | head -n1)
   tfenv install "$lastVersion"
   tfenv use "$lastVersion"
 }

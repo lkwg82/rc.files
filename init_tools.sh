@@ -3,7 +3,7 @@
 set -o pipefail
 
 function initMacosX() {
-  ssh-add -K
+  ssh-add --apple-use-keychain
 }
 
 # shellcheck disable=SC2154

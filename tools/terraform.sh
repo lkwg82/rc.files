@@ -18,9 +18,15 @@ alias tf_apply='terraform apply -auto-approve'
 
 function tf_pin_provider_versions {
 
-local versions="versions.tf"
+  local versions="versions.tf"
   if [[ -f $versions ]]; then
     echo "WARN file '$versions' already existing ... skip"
+    return
+  fi
+
+  # just check we did not fail later on
+  if ! terraform providers > /dev/null; then
+    echo "cannot pin versions"
     return
   fi
 

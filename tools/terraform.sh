@@ -60,6 +60,8 @@ cat <<EOF >> $versions.tmp
 }
 EOF
   mv -v $versions.tmp $versions
+
+  terraform init -upgrade
 }
 
 function tf_plan {

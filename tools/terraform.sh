@@ -1,9 +1,13 @@
 #!/bin/bash
 
-if ! command -v tfenv >/dev/null; then
-  echo "install tfenv"
-  brew install tfenv
-  tfenv install latest
+if command -v tfenv >/dev/null; then
+  echo "deinstall tfenv"
+  brew remove tfenv
+fi
+
+if command -v terraform >/dev/null; then
+  echo "install terraform"
+  brew install terraform
 fi
 
 if ! command -v tflint >/dev/null; then

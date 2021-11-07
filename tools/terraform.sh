@@ -5,7 +5,7 @@ if command -v tfenv >/dev/null; then
   brew remove tfenv
 fi
 
-if command -v terraform >/dev/null; then
+if ! command -v terraform >/dev/null; then
   echo "install terraform"
   brew install terraform
 fi

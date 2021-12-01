@@ -35,13 +35,12 @@ alias mvn_doxygen='mvn com.soebes.maven.plugins.dmg:doxygen-maven-plugin:report 
   '-Ddoxygen.input=src/main/java/\ src/test/java/'
 
 function __maven_bash_completion() {
-  if [[ ! -f $(brew --prefix)/etc/bash_completion.d/maven ]]; then
+  if [[ ! -f $BREW_PREFIX/etc/bash_completion.d/maven ]]; then
     echo "installing maven bash completion"
     brew install maven-completion
   fi
 
-  # shellcheck disable=SC1090
-  . "$(brew --prefix)/etc/bash_completion.d/maven"
+  . "$BREW_PREFIX/etc/bash_completion.d/maven"
 }
 
 # this wrapper function uses local mvn wrapper command if exists

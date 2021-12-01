@@ -17,14 +17,13 @@ BLUE='\[\e[01;34m\]'
 # shellcheck disable=SC2155
 export PS1="\[\e]0;${GREEN}\u${red}@${GREEN}\h: ${BLUE}\w ${BLUE}$(date +%H:%M)\e[0m\] \$ "
 
-if [[ ! -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
+if [[ ! -f $BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh ]]; then
   echo "installing first time bash-git-prompt"
   brew install bash-git-prompt
 fi
 
-if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
-  # shellcheck disable=SC2155
-  export __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+if [[ -f $BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh ]]; then
+  export __GIT_PROMPT_DIR=$BREW_PREFIX/opt/bash-git-prompt/share
 
   # configs
   # see https://github.com/magicmonty/bash-git-prompt#all-configs-for-bashrc
@@ -39,8 +38,7 @@ if [[ -f $(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh ]]; then
     fi
   }
 
-  # shellcheck disable=SC1090
-  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+  source "$BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh"
 fi
 
 # terraform workspace

@@ -11,15 +11,14 @@ fi
 # completion
 
 if [ ! -f /usr/local/etc/bash_completion ]; then
-  if [ ! -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
+  if [ ! -f "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash" ]; then
     echo "installing first time git bash-completion"
     brew install git bash-completion
   fi
 fi
 
-if [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ]; then
-  # shellcheck disable=SC1090
-  . "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
+if [ -f "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash" ]; then
+  . "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash"
 fi
 
 # HINT: for prompt see bash-prompt.sh

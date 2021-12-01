@@ -15,7 +15,7 @@ function exitAndShow() {
   exit 1
 }
 
-pushd ~/.bashrc.d || exitAndShow
+pushd ~/.bashrc.d > /dev/null || exitAndShow
 
 # shellcheck disable=SC1091
 source init_tools.sh
@@ -27,7 +27,7 @@ done
 set +x
 
 # shellcheck disable=SC2164
-popd
+popd > /dev/null
 
 function linkFile() {
   local file=$1

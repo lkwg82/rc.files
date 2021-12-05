@@ -12,10 +12,10 @@ export PROMPT_DIRTRIM=1
 
 GREEN='\e[1;32m\]'
 red='\e[0;31m\]'
-BLUE='\[\e[01;34m\]'
+BLUE='\[\e[1;34m\]'
 
 # shellcheck disable=SC2155
-export PS1="\[\e]0;${GREEN}\u${red}@${GREEN}\h: ${BLUE}\w ${BLUE}$(date +%H:%M)\e[0m\] \$ "
+export PS1="\[\e\]0\]${GREEN}\u${red}@${GREEN}\h: ${BLUE}\w ${BLUE}$(date +%H:%M)\e[0m\] \$ "
 
 if [[ ! -f $BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh ]]; then
   echo "installing first time bash-git-prompt"

@@ -179,20 +179,8 @@ alias tf_state_show='terraform state show -no-color'
 
 
 function tf_aws_ssm_connect {
-  echo -n "retrieving instanceId ... "
-  local instances=$(terraform state list | grep -E "^aws_instance\.")
-
-  local lines=$(echo "$instances" | wc -l)
-  if [[  $lines -eq 0 ]]; then
-    echo "ERROR no aws instances in state found"
-    return
-  elif [[ $lines -gt 1 ]]; then
-    echo "ERROR only one instance allowed"
-    return
-  fi
-
-  local instanceId=$(terraform state show "$instances" | grep "arn:aws:ec2:" |sed -e 's#.*instance/##; s#"##')
-  echo "$instanceId"
+  local instanceId=$1
+  echo "trying to connect to $instanceId"
 
   aws ssm start-session --target "$instanceId"
 }

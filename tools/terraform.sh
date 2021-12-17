@@ -19,6 +19,11 @@ fi
 complete -C "$(command -v terraform)" terraform
 
 alias tf_apply='terraform apply -auto-approve'
+alias tf_output='terraform output'
+
+# this fixes the output of ansi colors
+# see https://github.com/hashicorp/terraform/issues/21779
+alias tf_state_show='terraform state show -no-color'
 
 function tf_pin_provider_versions {
 
@@ -173,9 +178,6 @@ function tf___list_empty_workspaces {
   fi
 }
 
-# this fixes the output of ansi colors
-# see https://github.com/hashicorp/terraform/issues/21779
-alias tf_state_show='terraform state show -no-color'
 
 
 function tf_aws_ssm_connect {

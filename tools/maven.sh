@@ -47,11 +47,17 @@ function __maven_bash_completion() {
 function mvn() {
   __maven_bash_completion
 
-  if [[ -x 'mvnw' ]]; then
-    ./mvnw "$@"
-  elif [[ -x '../mvnw' ]]; then
-    ../mvnw "$@"
-  else
-    bash -c "mvn $*"
+  if ! command -v mvnd >/dev/null; then
+    sdk install mvnd
   fi
+
+  bash -c "mvnd $*"
+
+#  if [[ -x 'mvnw' ]]; then
+#    ./mvnw "$@"
+#  elif [[ -x '../mvnw' ]]; then
+#    ../mvnw "$@"
+#  else
+#    bash -c "mvn $*"
+#  fi
 }

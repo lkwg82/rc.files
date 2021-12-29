@@ -20,7 +20,10 @@ function cdmkdir() {
   mkdir -p "${dir}" && cd "${dir}"
 }
 
+# personal binaries in $HOME
 export PATH=~/bin:$PATH
+# locally installed binary of npm
+export PATH=node_modules/.bin:$PATH
 
 # https://github.com/jbarlow83/OCRmyPDF
 # https://medium.com/@thucnc/convert-a-scanned-pdf-to-text-with-linux-command-line-using-ocrmypdf-1a2e8d50277f

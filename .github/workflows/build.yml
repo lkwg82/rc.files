@@ -5,12 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get Date
+        id: get-date
+        run: |
+          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+        shell: bash
       - uses: actions/cache@v2
         with:
           path: /home/linuxbrew
-          key: ${{ runner.os }}-brew
-          restore-keys: |
-            ${{ runner.os }}-brew
+          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}
       # Homebrew
       - name: homebrew installation
         run:  if [ ! -d /home/linuxbrew ]; then bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" -y; fi

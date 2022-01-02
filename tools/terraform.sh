@@ -112,6 +112,7 @@ function tf_plan {
 }
 
 function tf_update_latest_terraform_version {
+  # shellcheck disable=SC2155
   local lastVersion=$(tfenv list-remote | grep -E "\.[0-9]+$" | head -n1)
   tfenv install "$lastVersion"
   tfenv use "$lastVersion"
@@ -143,6 +144,7 @@ function tf_workspace {
 }
 
 function tf___list_empty_workspaces {
+  # shellcheck disable=SC2155
   local currentWorkspace=$(terraform workspace show)
 
   if [[ -f __empty_workspaces ]]; then
@@ -151,13 +153,14 @@ function tf___list_empty_workspaces {
   fi
 
   for w in $(terraform workspace list | grep -vE "$currentWorkspace$" | grep -v default); do
-    if [[ $w == $currentWorkspace ]]; then
+    if [[ $w == "$currentWorkspace" ]]; then
       echo "skipping current workspace"
       continue
     fi
 
     echo "checking '$w' ... "
     terraform workspace select "$w"
+    # shellcheck disable=SC2155
     local resourceCount=$(terraform state list | wc -l)
     if [[ 0 -eq $resourceCount ]]; then
       echo " ... is empty"
@@ -174,6 +177,7 @@ function tf___list_empty_workspaces {
     sort __empty_workspaces
     echo "-- /empty workspaces --- "
     echo "execute the following command to remove them"
+    # shellcheck disable=SC2016
     echo 'for w in $(cat __empty_workspaces); do echo terraform workspace delete $w; done'
   fi
 }

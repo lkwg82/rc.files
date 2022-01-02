@@ -40,6 +40,7 @@ function __maven_bash_completion() {
     brew install maven-completion
   fi
 
+  # shellcheck disable=SC1091
   . "$BREW_PREFIX/etc/bash_completion.d/maven"
 }
 

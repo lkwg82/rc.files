@@ -12,8 +12,8 @@ fi
 
 if [ ! -f /usr/local/etc/bash_completion ]; then
   if [ ! -f "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash" ]; then
-    echo "installing first time git bash-completion"
-    brew install git # bash-completion
+    echo "installing first time git "
+    brew install git
   fi
 fi
 

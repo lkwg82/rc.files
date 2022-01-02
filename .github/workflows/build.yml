@@ -22,7 +22,7 @@ jobs:
         run: brew outdated
       - name: homebrew upgrade
         run: brew upgrade
-      - run: ln -s . .bashrc.d
+      - run: ln -s . $HOME/.bashrc.d
       - run: source __init__.sh
       # pre-commit
       - name: pre-commit installation

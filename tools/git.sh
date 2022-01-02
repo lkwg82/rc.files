@@ -17,6 +17,7 @@ if [ ! -f /usr/local/etc/bash_completion ]; then
   fi
 fi
 
+# shellcheck disable=SC1091
 if [ -f "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash" ]; then
   # shellcheck disable=SC1091
   . "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash"

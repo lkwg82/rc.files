@@ -23,6 +23,8 @@ jobs:
       - name: homebrew upgrade
         run: brew upgrade
       - run: ln -s . $HOME/.bashrc.d
+      - run: ls -ashl $HOME/.bashrc.d
+      - run: set -x
       - run: source __init__.sh
       # pre-commit
       - name: pre-commit installation

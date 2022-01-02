@@ -22,6 +22,7 @@ jobs:
         run: brew outdated
       - name: homebrew upgrade
         run: brew upgrade
+      - run: source __init__.sh
       # pre-commit
       - name: pre-commit installation
         run: brew install pre-commit

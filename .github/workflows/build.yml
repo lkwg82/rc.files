@@ -5,11 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: /home/linuxbrew
+          key: ${{ runner.os }}-brew
+          restore-keys: |
+            ${{ runner.os }}-brew
       # Homebrew
       - name: homebrew installation
-        run:  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" -y
+        run:  if [ ! -d /home/linuxbrew ]; then bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" -y; fi
+      - name: set PATH
+        run: export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
       - name: homebrew update
-        run:    brew update
+        run:  brew update
       - name: homebrew outdated
         run: brew outdated
       - name: homebrew upgrade
@@ -17,8 +25,8 @@ jobs:
       - name: homebrew installation
         run: brew install pre-commit
       # pre-commit
-      - name: run pre-commit
-        run: pre-commit run --verbose --all
+#      - name: run pre-commit
+#        run: pre-commit run --verbose --all
 #      - uses: actions/cache@v2
 #        with:
 #          path: ${{ steps.yarn-cache.outputs.dir }}

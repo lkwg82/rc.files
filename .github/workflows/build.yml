@@ -26,4 +26,4 @@ jobs:
       - run: ln -s $PWD $HOME/.bashrc.d
       - run: ls -ashl $HOME/.bashrc.d
       - run: set -x
-      - run: source __init__.sh; brew unlink util-linux; source __init__.sh
+      - run: source __init__.sh

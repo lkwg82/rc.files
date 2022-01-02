@@ -22,12 +22,9 @@ jobs:
         run: brew outdated
       - name: homebrew upgrade
         run: brew upgrade
+      # run tests
+      - run: brew unlink util-linux # allow installation of bash-completion
       - run: ln -s $PWD $HOME/.bashrc.d
       - run: ls -ashl $HOME/.bashrc.d
       - run: set -x
       - run: source __init__.sh
-      # pre-commit
-      - name: pre-commit installation
-        run: brew install pre-commit
-      - name: run pre-commit
-        run: pre-commit run --verbose --all-files

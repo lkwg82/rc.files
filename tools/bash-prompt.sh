@@ -38,6 +38,7 @@ if [[ -f $BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh ]]; then
     fi
   }
 
+  # shellcheck disable=SC1091
   source "$BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh"
 fi
 

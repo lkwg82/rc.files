@@ -13,18 +13,23 @@ function __setup_nvm(){
     echo "ERROR did not find nvm path '$path'"
     return
   fi
+  # shellcheck disable=SC1091
   [ -s "$path/opt/nvm/nvm.sh" ] && \. "$path/opt/nvm/nvm.sh"  # This loads nvm
+  # shellcheck disable=SC1091
   [ -s "$path/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$path/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 }
-
+# shellcheck disable=SC2154
 [[ ${platform} == "linux" ]] &&  __setup_nvm "/home/linuxbrew/.linuxbrew/"
 [[ ${platform} == "darwin" ]] &&  __setup_nvm "/usr/local/"
 
 (
-  cd "$OLDPWD"
+  if ! cd "$OLDPWD"; then
+    echo "ERROR could not 'cd $OLDPWD'"
+    return
+  fi
   if [ -f ".nvmrc" ]; then
     if ! nvm use; then
-      if ! nvm install $(cat .nvmrc); then
+      if ! nvm install "$(cat .nvmrc)"; then
         echo
         echo "WARNING sth is wrong with your '.nvmrc', see https://github.com/nvm-sh/nvm#nvmrc"
         echo "-- your nvmrc --"

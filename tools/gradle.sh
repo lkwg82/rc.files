@@ -1,11 +1,12 @@
 #!/bin/bash
 
 function __gradle_bash_completion() {
+  # shellcheck disable=SC1091
   if [[ ! -f $BREW_PREFIX/etc/bash_completion.d/gradle ]]; then
     echo "installing gradle bash completion"
     brew install gradle-completion
   fi
-
+  # shellcheck disable=SC1091
   . "$BREW_PREFIX/etc/bash_completion.d/gradle"
 }
 

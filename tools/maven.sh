@@ -54,11 +54,40 @@ function mvn() {
 
   bash -c "mvnd $*"
 
-#  if [[ -x 'mvnw' ]]; then
-#    ./mvnw "$@"
-#  elif [[ -x '../mvnw' ]]; then
-#    ../mvnw "$@"
-#  else
-#    bash -c "mvn $*"
-#  fi
+  #  if [[ -x 'mvnw' ]]; then
+  #    ./mvnw "$@"
+  #  elif [[ -x '../mvnw' ]]; then
+  #    ../mvnw "$@"
+  #  else
+  #    bash -c "mvn $*"
+  #  fi
 }
+export -f mvn
+
+# continuously maven
+function mvn_watch() {
+  if ! command -v inotifywait >/dev/null; then
+    echo "ERROR plz install inotifywait"
+    return 1
+  fi
+
+  if [[ $# == 0 ]]; then
+    echo "run '${FUNCNAME[0]}' like any maven command '${FUNCNAME[0]} clean compile'"
+    return
+  fi
+
+  mvn "$*"
+  while (true); do
+    echo "Waiting for changes (invoking 'mvn $*')"
+    inotifywait -q \
+      -e close_write \
+      -e create \
+      -e delete \
+      -e moved_from \
+      -e moved_to \
+      -r $(find . -maxdepth 1 -not -name "\.*" | xargs)
+    mvn "$*"
+    sleep 1
+  done
+}
+export -f mvn_watch

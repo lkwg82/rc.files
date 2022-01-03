@@ -1,3 +1,4 @@
+[![build](https://github.com/lkwg82/rc.files/actions/workflows/build.yml/badge.svg)](https://github.com/lkwg82/rc.files/actions/workflows/build.yml)
 
 # rc.files
 

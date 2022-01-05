@@ -43,6 +43,7 @@ function __maven_bash_completion() {
   # shellcheck disable=SC1091
   . "$BREW_PREFIX/etc/bash_completion.d/maven"
 }
+export -f __maven_bash_completion
 
 # this wrapper function uses local mvn wrapper command if exists
 function mvn() {

@@ -24,6 +24,7 @@ alias tf_output='terraform output'
 # this fixes the output of ansi colors
 # see https://github.com/hashicorp/terraform/issues/21779
 alias tf_state_show='terraform state show -no-color'
+alias tf_state_ls='terraform state list'
 
 function tf_pin_provider_versions {
 
@@ -180,13 +181,4 @@ function tf___list_empty_workspaces {
     # shellcheck disable=SC2016
     echo 'for w in $(cat __empty_workspaces); do echo terraform workspace delete $w; done'
   fi
-}
-
-
-
-function tf_aws_ssm_connect {
-  local instanceId=$1
-  echo "trying to connect to $instanceId"
-
-  aws ssm start-session --target "$instanceId"
 }

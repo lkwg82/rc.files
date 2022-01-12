@@ -19,6 +19,7 @@ fi
 complete -C "$(command -v terraform)" terraform
 
 alias tf_apply='terraform apply -auto-approve'
+alias tf_init='terraform init'
 alias tf_output='terraform output'
 
 # this fixes the output of ansi colors

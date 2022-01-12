@@ -1,23 +1,23 @@
 #!/bin/bash
 
-if [ ! -f /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh ]; then
-  brew install nvm
-fi
 
-mkdir -p "$HOME"/.nvm
-export NVM_DIR="$HOME/.nvm"
 
 function __setup_nvm(){
   local path=$1
+
+  mkdir -p "$HOME"/.nvm
+  export NVM_DIR="$HOME/.nvm"
+
   if [ ! -d "$path" ]; then
-    echo "ERROR did not find nvm path '$path'"
-    return
+    brew install nvm
   fi
+
   # shellcheck disable=SC1091
   [ -s "$path/opt/nvm/nvm.sh" ] && \. "$path/opt/nvm/nvm.sh"  # This loads nvm
   # shellcheck disable=SC1091
   [ -s "$path/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$path/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 }
+
 # shellcheck disable=SC2154
 [[ ${platform} == "linux" ]] &&  __setup_nvm "/home/linuxbrew/.linuxbrew/"
 [[ ${platform} == "darwin" ]] &&  __setup_nvm "/usr/local/"

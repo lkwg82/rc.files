@@ -14,6 +14,11 @@ if [ ! -f /usr/local/etc/bash_completion ]; then
   if [ ! -f "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash" ]; then
     echo "installing first time git "
     brew install git
+
+    if [ -f "$BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+    __GIT_PROMPT_DIR="$BREW_PREFIX/opt/bash-git-prompt/share"
+    source "$BREW_PREFIX/opt/bash-git-prompt/share/gitprompt.sh"
+  fi
   fi
 fi
 

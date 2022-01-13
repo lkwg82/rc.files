@@ -27,4 +27,5 @@ jobs:
         run: brew upgrade
       # run tests
       - run: ln -s $PWD $HOME/.bashrc.d
+      - run: set -xe
       - run: source __init__.sh

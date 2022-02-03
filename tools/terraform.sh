@@ -85,7 +85,10 @@ function tf_plan {
     return
   fi
 
-  terraform plan -out "$output.plan" | tee "$output"
+  if ! terraform plan -out "$output.plan" | tee "$output"; then
+    echo "error"
+    return
+  fi
 
 
   echo "... transforming into json ..."

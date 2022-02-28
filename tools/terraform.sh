@@ -150,14 +150,9 @@ function tf_workspace {
   terraform init -upgrade # since terraform v0.13
 }
 
-function tf___list_empty_workspaces {
+function tf___clean_empty_workspaces {
   # shellcheck disable=SC2155
   local currentWorkspace=$(terraform workspace show)
-
-  if [[ -f __empty_workspaces ]]; then
-      echo "plz remove old '__empty_workspaces' before proceeding"
-      exit 1
-  fi
 
   for w in $(terraform workspace list | grep -vE "$currentWorkspace$" | grep -v default); do
     if [[ $w == "$currentWorkspace" ]]; then
@@ -171,20 +166,13 @@ function tf___list_empty_workspaces {
     local resourceCount=$(terraform state list | wc -l)
     if [[ 0 -eq $resourceCount ]]; then
       echo " ... is empty"
-      echo "$w" >> __empty_workspaces
+      echo "deleting $w"
+      terraform workspace select $currentWorkspace
+      terraform workspace delete $w
     else
       echo " ... used: $resourceCount resources"
     fi
   done
 
   terraform workspace select "$currentWorkspace"
-
-  if [[ -f __empty_workspaces ]]; then
-    echo "--- empty workspaces --- "
-    sort __empty_workspaces
-    echo "-- /empty workspaces --- "
-    echo "execute the following command to remove them"
-    # shellcheck disable=SC2016
-    echo 'for w in $(cat __empty_workspaces); do echo terraform workspace delete $w; done'
-  fi
 }

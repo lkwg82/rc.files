@@ -11,7 +11,7 @@ if ! command -v terraform >/dev/null; then
 fi
 
 if ! command -v tflint >/dev/null; then
-  echo "installint tflint"
+  echo "install tflint"
   brew install tflint
 fi
 

@@ -8,6 +8,9 @@ function initMacosX() {
 
 # shellcheck disable=SC2154
 if [[ ${platform} == "darwin" ]]; then
+  if [[ ${architecture} == "arm64" ]] && [[ -f /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
   if ! command -v brew >/dev/null; then
     echo "install brew -> https://brew.sh/"
     echo "skipping further init ... needs brew"

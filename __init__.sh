@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# shellcheck disable=SC2034
+architecture=$(uname -m)
 platform='unknown'
 unamestr=$(uname)
 if [[ $unamestr == 'Linux' ]]; then

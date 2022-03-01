@@ -22,6 +22,7 @@ alias tf_apply='terraform apply -auto-approve'
 alias tf_destroy='terraform destroy'
 alias tf_init='terraform init'
 alias tf_output='terraform output'
+alias tf_providers='terraform providers'
 
 # this fixes the output of ansi colors
 # see https://github.com/hashicorp/terraform/issues/21779

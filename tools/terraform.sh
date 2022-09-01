@@ -87,7 +87,7 @@ function tf_plan {
     return
   fi
 
-  if ! terraform plan -out "$output.plan" | tee "$output"; then
+  if ! terraform plan -out "$output.plan" $* | tee "$output"; then
     echo "error"
     return
   fi

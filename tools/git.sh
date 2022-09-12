@@ -74,3 +74,10 @@ if [[ ${platform} == "darwin" ]]; then
   }
   export -f auto-commit-and-push
 fi
+
+
+function git_reset_with_submodules_recursivly(){
+  # see: https://gist.github.com/nicktoumpelis/11214362?permalink_comment_id=3729225#gistcomment-3729225
+
+  git reset --hard --recurse-submodule
+}

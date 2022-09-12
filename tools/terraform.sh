@@ -28,6 +28,7 @@ alias tf_providers='terraform providers'
 # see https://github.com/hashicorp/terraform/issues/21779
 alias tf_state_show='terraform state show -no-color'
 alias tf_state_ls='terraform state list'
+alias tf_state_mv='terraform state mv'
 alias tf_validate='terraform validate'
 
 function tf_pin_provider_versions {

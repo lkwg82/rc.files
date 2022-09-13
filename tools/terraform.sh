@@ -140,10 +140,21 @@ function tf_workspace {
     export TF_IN_AUTOMATION="true"
   fi
 
+  if [[ $(terraform workspace show) == "$workspace" ]]; then
+    echo "already on '$workspace'"
+    return
+  fi
+
   echo " try to select workspace '$workspace' ... "
   if terraform workspace select "$workspace" 2>/dev/null; then
     echo -n ""
   else
+    read -r -p "Want to create new workspace? (y/n) : " -n 1
+    echo
+    if [[ $REPLY != "y" ]]; then
+      echo "skipping"
+      return
+    fi
     if ! terraform workspace new "$workspace"; then
       echo "failed"
     fi

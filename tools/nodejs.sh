@@ -23,11 +23,14 @@ function __setup_nvm(){
 [[ ${platform} == "darwin" ]] &&  __setup_nvm "/usr/local/"
 
 (
+  # to handle things in working dir
+  # and not in lib dir
   if ! cd "$OLDPWD"; then
     echo "ERROR could not 'cd $OLDPWD'"
     return
   fi
-  if [ -f ".nvmrc" ]; then
+
+  if [[ -f .nvmrc ]]; then
     if ! nvm use; then
       if ! nvm install "$(cat .nvmrc)"; then
         echo

@@ -15,6 +15,10 @@ if ! command -v tflint >/dev/null; then
   brew install tflint
 fi
 
+# see https://developer.hashicorp.com/terraform/cli/config/config-file#provider-plugin-cache
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+mkdir -p "$TF_PLUGIN_CACHE_DIR"
+
 # enable completion
 complete -C "$(command -v terraform)" terraform
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! test -d ~/.sdkman; then
+if [[ ! -d ~/.sdkman ]]; then
   echo "installing sdkman"
   curl -s "https://get.sdkman.io" | bash
   # see https://sdkman.io/usage#config

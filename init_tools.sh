@@ -32,8 +32,14 @@ fi
 # shellcheck disable=SC2155
 export BREW_PREFIX=$(brew --prefix)
 
-if command -v brew >/dev/null; then
-  for p in wget htop curl; do
-    command -v ${p} >/dev/null || brew install ${p}
-  done
-fi
+function __lazy_install() {
+  local cmd=$1
+  if ! command -v "$cmd" >/dev/null; then
+    echo "installing '$cmd'"
+    brew install "$cmd"
+  fi
+}
+
+__lazy_install wget
+__lazy_install htop
+__lazy_install curl

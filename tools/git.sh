@@ -2,9 +2,7 @@
 
 set -o pipefail
 
-if ! command -v git >/dev/null; then
-  return
-fi
+__lazy_install git
 
 # https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 

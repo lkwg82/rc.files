@@ -14,8 +14,11 @@ function __setup_nvm(){
 
   # shellcheck disable=SC1091
   [ -s "$path/opt/nvm/nvm.sh" ] && \. "$path/opt/nvm/nvm.sh"  # This loads nvm
+
+  set +e # sth fishy here
   # shellcheck disable=SC1091
   [ -s "$path/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$path/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  set -e
 }
 
 # shellcheck disable=SC2154

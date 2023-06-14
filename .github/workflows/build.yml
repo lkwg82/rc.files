@@ -14,21 +14,6 @@ jobs:
         with:
           path: /home/linuxbrew
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}
-      # Homebrew
-#      - name: homebrew installation
-#        # language=bash
-#        run: |
-#          if [ ! -d /home/linuxbrew ]; then
-#            bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" -y;
-#          fi
-#      - name: set PATH
-#        run: export PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
-#      - name: homebrew update
-#        run:  brew update
-#      - name: homebrew outdated
-#        run: brew outdated
-#      - name: homebrew upgrade
-#        run: brew upgrade
       - name: Set up Homebrew
         # link: https://github.com/Homebrew/actions/tree/master/setup-homebrew
         id: set-up-homebrew

@@ -1,8 +1,9 @@
 #!/bin/bash
 
-env | sort
-
-set -e # for debugging in github actions
+if [[ -n $CI ]]; then
+  env | sort
+  set -x # for debugging in github actions
+fi
 
 # shellcheck disable=SC2034
 architecture=$(uname -m)

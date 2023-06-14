@@ -35,5 +35,4 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
       # run tests
       - run: ln -s $PWD $HOME/.bashrc.d
-      - run: set -xe
       - run: source __init__.sh

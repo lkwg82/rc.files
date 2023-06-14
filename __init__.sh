@@ -31,7 +31,9 @@ for file in tools/*.sh; do
   # shellcheck disable=SC1090
   source "$file"
 done
-set +x
+
+set +o errexit # deactivate exit on error
+set +o xtrace  # deactivate tracing
 
 # shellcheck disable=SC2164
 popd > /dev/null

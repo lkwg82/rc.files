@@ -6,10 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get Date
-        id: date
+        id: get-date
         run: |
           value=date::$(/bin/date -u "+%Y%m%d")
-          echo "name=${value}" >> $GITHUB_OUTPUT
+          echo "date=${value}" >> $GITHUB_OUTPUT
       - uses: actions/cache@v2
         with:
           path: /home/linuxbrew

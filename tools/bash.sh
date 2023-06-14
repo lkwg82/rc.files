@@ -61,3 +61,7 @@ _ssh()
     return 0
 }
 complete -F _ssh ssh
+
+if [[ -r /usr/share/bash-completion/completions/systemctl ]]; then
+    . /usr/share/bash-completion/completions/systemctl && complete -F _systemctl systemctl
+fi

@@ -43,6 +43,10 @@ fi
 
 alias cat='bat'
 
+# adds default expiration to ssh keys unlocked for the agent
+# see: https://unix.stackexchange.com/questions/122511/configuring-the-default-timeout-for-the-ssh-agent
+alias ssh-add='ssh-add -t 1h'
+
 _ssh()
 {
     local cur prev opts

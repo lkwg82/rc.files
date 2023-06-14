@@ -1,5 +1,9 @@
 #!/bin/bash
 
+env | sort
+
+set -e # for debugging in github actions
+
 # shellcheck disable=SC2034
 architecture=$(uname -m)
 platform='unknown'

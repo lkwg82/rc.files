@@ -25,6 +25,7 @@ complete -C "$(command -v terraform)" terraform
 alias tf_apply='terraform apply -auto-approve'
 alias tf_destroy='terraform destroy'
 alias tf_init='terraform init'
+alias tf_import='terraform import'
 alias tf_output='terraform output'
 alias tf_providers='terraform providers'
 

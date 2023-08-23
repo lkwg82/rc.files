@@ -34,6 +34,7 @@ alias tf_providers='terraform providers'
 alias tf_state_show='terraform state show -no-color'
 alias tf_state_ls='terraform state list'
 alias tf_state_mv='terraform state mv'
+alias tf_state_rm='terraform state rm'
 alias tf_validate='terraform validate'
 
 function tf_pin_provider_versions {

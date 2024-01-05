@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if command -v tfenv >/dev/null; then
-  echo "deinstall tfenv"
-  brew remove tfenv
-fi
-
 if ! command -v terraform >/dev/null; then
   echo "install terraform"
   brew install terraform

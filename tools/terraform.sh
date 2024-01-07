@@ -30,6 +30,7 @@ alias tf_state_show='terraform state show -no-color'
 alias tf_state_ls='terraform state list'
 alias tf_state_mv='terraform state mv'
 alias tf_state_rm='terraform state rm'
+alias tf_taint='terraform taint'
 alias tf_validate='terraform validate'
 
 function tf_pin_provider_versions {
@@ -119,6 +120,83 @@ function tf_plan {
     printf "\e[93m\e[1mElements to be updated .\e[0m\n"
     sed -e 's#^# #'  "$output.update"
   fi
+}
+
+function tf_test {
+  if [[ ! -d tests ]]; then
+    read -r -p "Want to create a tests directory? (y/n) : " -n 1 reply
+    echo "reply: $reply"
+    if [[ $reply == "y" ]]; then
+
+      function defined_vars {
+        # need `find` command,
+        # else missing newline at the end of files would merge lines
+        # and break `grep` pattern
+        find . -maxdepth 1 -type f -name "*.tf" -exec cat {} \; \
+              | grep ^variable \
+              | awk '{print $2}' \
+              | xargs -n 1 \
+              | sort
+      }
+
+      mkdir -p tests/setup
+      cat << EOF > tests/setup/main.tf
+# variables for propagation
+$(defined_vars | sed -e 's|^\(.*\)|# variable "\1" {}|')
+
+module "sut" {
+  depends = [ ... ]
+
+  source = "../.."
+  $(defined_vars | sed -e 's|^\(.*\)|# \1 = var.\1|')
+}
+
+# add what you need for your tests
+EOF
+      terraform fmt tests/setup/main.tf
+
+      cat << EOF > tests/all.tftest.hcl
+variables{ # should be from module
+  $(defined_vars | sed -e 's|^\(.*\)|# \1 = ...|')
+}
+
+run "simple"{
+  # command = plan # default is 'apply'
+
+  #variables{ # should be from module
+    $(defined_vars | sed -e 's|^\(.*\)|# \1 = ...|')
+  #}
+
+  assert {
+    # condition must contain a resource from module
+    condition     = length(data.docker_logs.short_live_stderr.logs_list_string) == 0
+    error_message = "test"
+  }
+}
+
+  run "complex"{
+    #variables{ # should be from setup-module (needs propation to original module)
+      $(defined_vars | sed -e 's|^\(.*\)|# \1 = ...|')
+    #}
+
+    module {
+      source = "./tests/setup"
+    }
+
+    assert {
+      # condition must contain a resource from module
+      # cannot access original module (only proxy module)
+      condition     = length(data.docker_logs.short_live_stderr.logs_list_string) == 0
+      error_message = "test"
+    }
+  }
+EOF
+    fi
+    terraform fmt tests/all.tftest.hcl
+
+    terraform init
+  fi
+  terraform test $@
 }
 
 function tf_update_latest_terraform_version {

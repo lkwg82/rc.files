@@ -62,6 +62,8 @@ function tf_apply {
       terraform apply -auto-approve $@
     fi
   fi
+  echo "✏️reformat (if needed)"
+  terraform fmt
 }
 
 function tf_pin_provider_versions {

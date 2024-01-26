@@ -1,8 +1,17 @@
 #!/bin/bash
 
 if ! command -v terraform >/dev/null; then
-  echo "install terraform"
-  brew install terraform
+  echo "install terraform via tfenv"
+  brew install tfenv
+  # install latest
+  tfenv install latest && tfenv use
+fi
+
+if [[ -d ~/.config/topgrade ]] && ! [[ -f ~/.config/topgrade/tfenv.toml ]] && ! command -v topgrade >/dev/null; then
+  cat << EOF > ~/.config/topgrade/tfenv.toml
+    [commands]
+    "Terraform: tfenv" = "tfenv install latest && tfenv use"
+EOF
 fi
 
 if ! command -v tflint >/dev/null; then

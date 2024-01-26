@@ -153,6 +153,18 @@ function tf_plan {
   fi
 }
 
+tf_graph() {
+  local plan=$(mktemp)
+  local graph=$(mktemp)
+  local image=$(mktemp)
+
+  terraform plan -out "$plan" $*
+  terraform graph -plan="$plan" -draw-cycles > "$graph"
+
+  dot -Tpng -o "${image}.png" "$graph"
+  open "${image}.png"
+}
+
 function tf_test {
   if [[ ! -d tests ]]; then
     read -r -p "Want to create a tests directory? (y/n) : " -n 1 reply

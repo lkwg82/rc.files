@@ -17,7 +17,6 @@ mkdir -p "$TF_PLUGIN_CACHE_DIR"
 # enable completion
 complete -C "$(command -v terraform)" terraform
 
-alias tf_apply='terraform apply -auto-approve'
 alias tf_destroy='terraform destroy'
 alias tf_init='terraform init'
 alias tf_import='terraform import'
@@ -32,6 +31,29 @@ alias tf_state_mv='terraform state mv'
 alias tf_state_rm='terraform state rm'
 alias tf_taint='terraform taint'
 alias tf_validate='terraform validate'
+
+# terraform apply -auto-approve ...
+#  catches missing 'terraform init'
+function tf_apply {
+  local tmp_err=$(mktemp)
+  # redirect stderr to file and stderr
+  # to grep error message
+  (
+    # shellcheck disable=SC2068
+    terraform apply -auto-approve $@
+  ) 2> >(tee "$tmp_err" 2>&2)
+
+  local exit_code=$?
+  if [[ $exit_code -gt 0 ]]; then
+    if grep -q "Module not installed" "$tmp_err"; then
+      echo "ℹ️ HINT: missing 'terraform init' ... I'll do it 🚕"
+      tf_init
+      echo "ℹ️ HINT: retry 'terraform apply --auto-approve $*' ... I'll do it 🚕"
+      # shellcheck disable=SC2068
+      terraform apply -auto-approve $@
+    fi
+  fi
+}
 
 function tf_pin_provider_versions {
 

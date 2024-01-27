@@ -30,12 +30,12 @@ export PATH=node_modules/.bin:$PATH
 alias docker_ocrmypdf='docker run --rm  -i --user "$(id -u):$(id -g)" --workdir /data -v "$PWD:/data" jbarlow83/ocrmypdf'
 
 
-if ! command -v exa >/dev/null; then
-  brew install exa
+if command -v exa >/dev/null; then
+  brew remove exa # not maintained anymore
 fi
 
-alias ls='exa -al'
-alias ll='exa -alhg'
+alias ls='ls -al'
+alias ll='ls -lisa'
 
 if ! command -v bat >/dev/null; then
   brew install bat

@@ -21,7 +21,7 @@ function __docker_containers() {
     printf "%-30s %s\n"  \
       $(gum spin --show-output --spinner dot --title 'list containers ...' -- \
       "$SHELL" -c "docker ps --format '{{.Names}} {{.ID}}' | sort ") \
-    | gum choose \
+    | gum filter --no-fuzzy \
     | awk '{print $2}'
   )
   export CONTAINER_ID=$cid

@@ -31,14 +31,13 @@ alias tf_init='terraform init'
 alias tf_output='terraform output'
 alias tf_providers='terraform providers'
 
-# this fixes the output of ansi colors
-# see https://github.com/hashicorp/terraform/issues/21779
-alias tf_state_show='terraform state show -no-color'
 alias tf_state_ls='terraform state list'
 alias tf_state_mv='terraform state mv'
 alias tf_state_rm='terraform state rm'
 alias tf_taint='terraform taint'
 alias tf_validate='terraform validate'
+
+
 
 # terraform apply -auto-approve ...
 #  catches missing 'terraform init'
@@ -176,6 +175,14 @@ tf_graph() {
 
   dot -Tpng -o "${image}.png" "$graph"
   open "${image}.png"
+}
+
+function tf_state_show {
+  if [ "$*" == "" ]; then
+    tf_state_show $(gum spin --title "listing ... " --show-output terraform state list | gum filter)
+  else
+    terraform state show $* | tee >(to_clipboard)
+  fi
 }
 
 function tf_test {

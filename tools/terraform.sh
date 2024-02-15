@@ -28,7 +28,6 @@ complete -C "$(command -v terraform)" terraform
 
 alias tf_destroy='terraform destroy'
 alias tf_init='terraform init'
-alias tf_import='terraform import'
 alias tf_output='terraform output'
 alias tf_providers='terraform providers'
 
@@ -64,6 +63,18 @@ function tf_apply {
   fi
   echo "✏️reformat (if needed)"
   terraform fmt
+}
+
+function tf_import {
+  local resource=$1
+  local aws_address=$2
+
+  if terraform import "${resource}" "${aws_address}"; then
+    gum spin \
+        --show-output \
+        --title "Loading imported '${resource}' ..." \
+        terraform state show "${resource}" | tee >(to_clipboard)
+  fi
 }
 
 function tf_pin_provider_versions {

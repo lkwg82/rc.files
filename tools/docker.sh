@@ -1,5 +1,17 @@
 #!/bin/bash
 
+function docker_build_mounted_run(){
+  local image="test-$RANDOM"
+  docker build -t "$image" .
+
+  if [ $# -eq 0 ]; then
+    docker run --rm -ti -v "$PWD":/src -w /src $image
+  else
+    # shellcheck disable=SC2068
+    docker run --rm -ti -v "$PWD":/src -w /src $image $@
+  fi
+}
+
 function docker_build_run(){
   local image="test-$RANDOM"
   docker build -t "$image" .

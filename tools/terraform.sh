@@ -186,7 +186,12 @@ function tf_state_show {
 }
 
 function tf_test {
-  if [[ ! -d tests ]]; then
+
+  if [[ $(find . -type f -name "*.tftest.hcl" | wc -c | xargs) != "0" ]]; then
+    HAS_TF_TESTS=1
+  fi
+
+  if [[ -z $HAS_TF_TESTS ]] && [[ ! -d tests ]]; then
     read -r -p "Want to create a tests directory? (y/n) : " -n 1 reply
     echo "reply: $reply"
     if [[ $reply == "y" ]]; then

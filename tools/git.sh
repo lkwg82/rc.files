@@ -79,3 +79,18 @@ function git_reset_with_submodules_recursivly(){
 
   git reset --hard --recurse-submodule
 }
+
+function git_maintenance() {
+	if [[ ! -d .git ]]; then
+	   echo "need to be in git repository"
+	   exit 1
+	fi
+
+	du -sh
+
+	git maintenance run --task=gc
+	git maintenance run --task=pack-refs
+	git maintenance run --task=loose-objects
+
+	du -sh
+}

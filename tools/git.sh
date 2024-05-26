@@ -86,11 +86,18 @@ function git_maintenance() {
 	   exit 1
 	fi
 
+	echo "-------------------------------"
+	echo " git maintenance for $PWD"
 	du -sh
+	echo "--^^ before ... running ..."
 
 	git maintenance run --task=gc
 	git maintenance run --task=pack-refs
 	git maintenance run --task=loose-objects
 
+	echo "--  after ..."
 	du -sh
+	echo "-------------------------------"
+	echo 
 }
+export -f git_maintenance

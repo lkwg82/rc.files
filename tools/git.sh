@@ -84,7 +84,7 @@ function git_reset_with_submodules_recursivly(){
 function git_maintenance() {
 	if [[ ! -d .git ]]; then
 	   echo "need to be in git repository"
-	   exit 1
+	   return
 	fi
 
 	echo "-------------------------------"

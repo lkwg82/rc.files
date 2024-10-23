@@ -141,12 +141,10 @@ function tf_plan {
     export CI_PROJECT_DIR=$(git rev-parse --show-toplevel)
   fi
 
-  set +e
   # shellcheck disable=SC2086
   # shellcheck disable=SC2048
   terraform plan -detailed-exitcode -out "$output.plan" $* | tee "$output";
   exitCode=$?
-  set -e
   #  -detailed-exitcode         Return detailed exit codes when the command exits.
   #                             This will change the meaning of exit codes to:
   #                             0 - Succeeded, diff is empty (no changes)

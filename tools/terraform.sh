@@ -133,7 +133,8 @@ function tf_plan {
     # shellcheck disable=SC2155
     export CI_COMMIT_REF_NAME=$(git branch --show-current)
     # shellcheck disable=SC2155
-    local remote=$(git config get branch.main.remote)
+    # shellcheck disable=SC2046
+    local remote=$(git config get branch.$(git branch --show-current).remote)
     # shellcheck disable=SC2155
     export CI_PROJECT_URL=$(git remote get-url "$remote" | sed -e 's|.*@ssh.||; s|:|/|; s|^|https://|; s|.git$||')
     # shellcheck disable=SC2155

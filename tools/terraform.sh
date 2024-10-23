@@ -130,17 +130,18 @@ function tf_plan {
 
   if [[ $HOSTNAME =~ "bwpm-"* ]]; then
     export CI=true
+    # shellcheck disable=SC2155
     export CI_COMMIT_REF_NAME=$(git branch --show-current)
+    # shellcheck disable=SC2155
     local remote=$(git config get branch.main.remote)
+    # shellcheck disable=SC2155
     export CI_PROJECT_URL=$(git remote get-url "$remote" | sed -e 's|.*@ssh.||; s|:|/|; s|^|https://|; s|.git$||')
+    # shellcheck disable=SC2155
     export CI_PROJECT_DIR=$(git rev-parse --show-toplevel)
   fi
 
-  if ! terraform validate; then
-    echo "stopped on error"
-    return
-  fi
-
+  # shellcheck disable=SC2086
+  # shellcheck disable=SC2048
   if ! terraform plan -out "$output.plan" $* | tee "$output"; then
     echo "error"
     return

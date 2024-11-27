@@ -143,7 +143,7 @@ function tf_plan {
 
   # shellcheck disable=SC2086
   # shellcheck disable=SC2048
-  terraform plan -detailed-exitcode -out "$output.plan" $* | tee "$output";
+  terraform plan -detailed-exitcode -out "$output.plan" $* ;
   exitCode=$?
   #  -detailed-exitcode         Return detailed exit codes when the command exits.
   #                             This will change the meaning of exit codes to:

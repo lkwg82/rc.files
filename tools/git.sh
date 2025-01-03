@@ -102,3 +102,33 @@ function git_maintenance() {
 	echo 
 }
 export -f git_maintenance
+
+function git_clean_merged_branches() {
+  local branches=$(git branch --merged | grep -vE "\*|main|master")
+
+  local keep_asking=true
+  if [ -z "$branches" ]; then
+    echo "Keine gemergten Branches gefunden."
+    keep_asking=false
+  fi
+
+  while $keep_asking; do
+    # Mit `gum choose` einen Branch auswählen
+    local branch=$(echo "$branches" | gum choose --limit 1 --header "Wähle Branch(es) zum Löschen aus:" | xargs)
+
+    if [ -z "$branch" ]; then
+      echo "Keine Auswahl getroffen. Beenden."
+      break
+    fi
+
+    # Bestätigung anzeigen
+    gum confirm --default=no "Möchtest du den Branch '$branch' wirklich löschen?" && {
+      # Branch löschen
+      git branch -d "$branch" && echo "Branch '$branch' wurde gelöscht."
+      # Aktualisierte Liste der Branches
+      branches=$(git branch --merged | grep -vE "\*|main|master")
+      [ -z "$branches" ] && echo "Keine weiteren gemergten Branches." && keep_asking=false
+    } || echo "Branch '$branch' wurde nicht gelöscht."
+  done
+}
+export -f git_clean_merged_branches

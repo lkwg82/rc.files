@@ -32,11 +32,23 @@ fi
 # shellcheck disable=SC2155
 export BREW_PREFIX=$(brew --prefix)
 
+alias _info='echo -n "🐛"; echo'
 function __lazy_install() {
   local cmd=$1
+
+  if [[ -n ${DEBUG_LAZY_INSTALL:-} ]]; then
+    _info "check '${cmd}' installed?"
+  fi
+
   if ! command -v "$cmd" >/dev/null; then
+    if [[ -n ${DEBUG_LAZY_INSTALL:-} ]]; then
+      _info " '${cmd}' missing 🔜 installed"
+    fi
     echo "installing '$cmd'"
     brew install "$cmd"
+  fi
+  if [[ -n ${DEBUG_LAZY_INSTALL:-} ]]; then
+    _info " '${cmd}' installed ✅ "
   fi
 }
 

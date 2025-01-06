@@ -6,8 +6,9 @@ fi
 
 
 function init_installed_programs(){
-  brew install topgrade
 
+
+  brew install topgrade # updates
   brew install bash # use more uptodate version than v3
 
   # window placement
@@ -21,4 +22,9 @@ function init_installed_programs(){
 
   # System monitor for the menu bar
   brew install --cask stats
+
+  # docker
+  brew install docker
+  brew install colima
+  brew services start colima
 }

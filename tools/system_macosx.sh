@@ -27,4 +27,6 @@ function init_installed_programs(){
   brew install docker
   brew install colima
   brew services start colima
+
+  brew install iterm2
 }

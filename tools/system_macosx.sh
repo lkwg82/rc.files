@@ -6,7 +6,7 @@ fi
 
 
 function init_installed_programs(){
-  local DEBUG_LAZY_INSTALL=1
+  brew install topgrade
 
   brew install bash # use more uptodate version than v3
 

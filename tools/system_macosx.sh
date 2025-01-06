@@ -8,6 +8,8 @@ fi
 function init_installed_programs(){
   local DEBUG_LAZY_INSTALL=1
 
+  brew install bash # use more uptodate version than v3
+
   # window placement
   brew install rectangle
 

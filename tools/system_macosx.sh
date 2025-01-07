@@ -32,4 +32,6 @@ function init_installed_programs(){
 
   brew install borgbackup
   brew install vorta # borg-backup ui
+
+  brew install keepassxc
 }

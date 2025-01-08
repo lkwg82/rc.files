@@ -1,13 +1,12 @@
 #!/bin/bash
 
+# shellcheck disable=SC2154
 if [[ ${platform} != "darwin" ]]; then
   return
 fi
 
 
 function init_installed_programs(){
-
-
   brew install topgrade # updates
   brew install bash # use more uptodate version than v3
 

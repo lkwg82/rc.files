@@ -34,4 +34,6 @@ function init_installed_programs(){
   brew install vorta # borg-backup ui
 
   brew install keepassxc
+  brew install ghorg # mass git repo cloning
+  brew install sops # credentials encrypted in git repos
 }

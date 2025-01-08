@@ -29,11 +29,6 @@ export PATH=node_modules/.bin:$PATH
 # https://medium.com/@thucnc/convert-a-scanned-pdf-to-text-with-linux-command-line-using-ocrmypdf-1a2e8d50277f
 alias docker_ocrmypdf='docker run --rm  -i --user "$(id -u):$(id -g)" --workdir /data -v "$PWD:/data" jbarlow83/ocrmypdf'
 
-
-if command -v exa >/dev/null; then
-  brew remove exa # not maintained anymore
-fi
-
 alias ls='ls -al'
 alias ll='ls -lisa'
 

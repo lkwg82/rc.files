@@ -1,6 +1,9 @@
 #!/bin/bash
 
 __lazy_install gum
+__lazy_install kubectl
+__lazy_install kubectx
+__lazy_install k9s
 
 function k8_eks_choose_cluster {
   (

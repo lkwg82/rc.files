@@ -24,6 +24,10 @@ function init_installed_programs(){
 
   # docker
   brew install docker
+  brew install docker-buildx
+  mkdir -p ~/.docker/cli-plugins
+  ln -sfn $(which docker-buildx) ~/.docker/cli-plugins/docker-buildx
+
   brew install colima
   brew services start colima
 

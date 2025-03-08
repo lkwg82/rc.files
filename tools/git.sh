@@ -6,6 +6,9 @@ __lazy_install git
 
 # https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 
+git config --global alias.ci commit
+git config --global alias.st status
+
 # completion
 
 if [ ! -f /usr/local/etc/bash_completion ]; then

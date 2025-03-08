@@ -1,5 +1,7 @@
 #!/bin/bash
 
+alias dc='docker compose'
+
 function docker_build_mounted_run(){
   local image="test-$RANDOM"
   docker build -t "$image" .

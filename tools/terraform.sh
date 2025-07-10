@@ -7,12 +7,22 @@ if ! command -v terraform >/dev/null; then
   tenv tf install latest && tenv tf use latest
 fi
 
-if [[ -d ~/.config/topgrade ]] && ! [[ -f ~/.config/topgrade/tenv.toml ]] && ! command -v topgrade >/dev/null; then
-  cat << EOF > ~/.config/topgrade/tenv.toml
+if ! command -v tofu >/dev/null; then
+  echo "install tofu via tenv"
+  brew install tenv
+  # install latest
+  tenv tf install latest && tenv tf use latest
+fi
+
+if [[ -d ~/.config/topgrade.d ]] && ! [[ -f ~/.config/topgrade.d/tenv.toml ]] && ! command -v topgrade >/dev/null; then
+  cat << EOF > ~/.config/topgrade.d/tenv.toml
     [commands]
     "Terraform: tenv" = "tenv tf install latest && tfenv tf use latest"
+    "Tofu: tenv" = "tenv tofi install latest && tfenv tofu use latest"
 EOF
 fi
+
+alias terraform=tofu # migrate to tofu
 
 if ! command -v tflint >/dev/null; then
   echo "install tflint"
@@ -42,6 +52,7 @@ alias tf_validate='terraform validate'
 # terraform apply -auto-approve ...
 #  catches missing 'terraform init'
 function tf_apply {
+  # shellcheck disable=SC2155
   local tmp_err=$(mktemp)
   # redirect stderr to file and stderr
   # to grep error message
@@ -180,10 +191,14 @@ function tf_plan {
 }
 
 tf_graph() {
+  # shellcheck disable=SC2155
   local plan=$(mktemp)
+  # shellcheck disable=SC2155
   local graph=$(mktemp)
+  # shellcheck disable=SC2155
   local image=$(mktemp)
 
+  # shellcheck disable=SC2048
   terraform plan -out "$plan" $*
   terraform graph -plan="$plan" -draw-cycles > "$graph"
 
@@ -193,6 +208,7 @@ tf_graph() {
 
 function tf_state_show {
   if [ "$*" == "" ]; then
+    # shellcheck disable=SC2046
     tf_state_show $(gum spin --title "listing ... " --show-output terraform state list | gum filter)
   else
     terraform state show $* | tee >(to_clipboard)
@@ -278,6 +294,7 @@ EOF
 
     terraform init
   fi
+  # shellcheck disable=SC2068
   terraform test $@
 }
 
@@ -341,8 +358,8 @@ function tf___clean_empty_workspaces {
     if [[ 0 -eq $resourceCount ]]; then
       echo " ... is empty"
       echo "deleting $w"
-      terraform workspace select $currentWorkspace
-      terraform workspace delete $w
+      terraform workspace select "$currentWorkspace"
+      terraform workspace delete "$w"
     else
       echo " ... used: $resourceCount resources"
     fi

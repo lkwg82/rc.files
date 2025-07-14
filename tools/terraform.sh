@@ -17,8 +17,8 @@ fi
 if [[ -d ~/.config/topgrade.d ]] && ! [[ -f ~/.config/topgrade.d/tenv.toml ]] && ! command -v topgrade >/dev/null; then
   cat << EOF > ~/.config/topgrade.d/tenv.toml
     [commands]
-    "Terraform: tenv" = "tenv tf install latest && tfenv tf use latest"
-    "Tofu: tenv" = "tenv tofi install latest && tfenv tofu use latest"
+    "Terraform: tenv" = "tenv tf install latest && tenv tf use latest"
+    "Tofu: tenv" = "tenv tofu install latest && tenv tofu use latest"
 EOF
 fi
 

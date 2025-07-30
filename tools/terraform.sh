@@ -11,7 +11,7 @@ if ! command -v tofu >/dev/null; then
   echo "install tofu via tenv"
   brew install tenv
   # install latest
-  tenv tf install latest && tenv tf use latest
+  tenv tofu install latest && tenv tofu use latest
 fi
 
 if [[ -d ~/.config/topgrade.d ]] && ! [[ -f ~/.config/topgrade.d/tenv.toml ]] && ! command -v topgrade >/dev/null; then

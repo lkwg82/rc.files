@@ -75,6 +75,16 @@ function tf_apply {
 #  terraform fmt
 }
 
+# see https://opentofu.org/docs/cli/commands/fmt/
+function tf_fmt {
+  if tofu fmt -list=true -diff -check; then
+    echo "✅ everything formatted"
+  else
+    echo "✏️ formatted"
+    tofu fmt -list=true
+  fi
+}
+
 function tf_import {
   local resource=$1
   local aws_address=$2

@@ -20,6 +20,11 @@ function cdmkdir() {
   mkdir -p "${dir}" && cd "${dir}"
 }
 
+if [[ $TERM == "xterm-ghostty" ]]; then
+  echo "Workaround: https://github.com/ghostty-org/ghostty/discussions/3161"
+  export TERM=xterm-256color
+fi
+
 # personal binaries in $HOME
 export PATH=~/bin:$PATH
 # locally installed binary of npm

@@ -58,3 +58,9 @@ function docker_logs() {
     docker logs --timestamps $* "$CONTAINER_ID"
   )
 }
+
+# shellcheck disable=SC2154
+if [[ ${platform} == "linux" ]]; then
+  systemctl --user start podman.socket >&2 2> /dev/null
+  export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
+fi

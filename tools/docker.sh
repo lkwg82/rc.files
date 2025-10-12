@@ -1,9 +1,17 @@
 #!/bin/bash
 
-alias dc='docker compose'
+#alias dc='docker compose'
 
 __lazy_install lazydocker
 __lazy_install docker-compose
+
+function dc(){
+  if command podman-compose --help 2>&1 >/dev/null; then
+	podman-compose $*
+  else
+	docker compose $*
+  fi
+}
 
 function docker_build_mounted_run(){
   local image="test-$RANDOM"

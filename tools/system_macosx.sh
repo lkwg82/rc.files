@@ -8,7 +8,7 @@ fi
 
 function init_installed_programs(){
   brew install topgrade # updates
-  brew install bash # use more uptodate version than v3
+  brew install bash # use more up-to-date version than v3
 
   # window placement
   brew install rectangle
@@ -39,4 +39,6 @@ function init_installed_programs(){
   brew install keepassxc
   brew install ghorg # mass git repo cloning
   brew install sops # credentials encrypted in git repos
+
+  brew install gitlab-ci-local
 }

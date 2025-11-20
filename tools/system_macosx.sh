@@ -31,7 +31,7 @@ function init_installed_programs(){
   brew install colima
   brew services start colima
 
-  brew install iterm2
+  brew install ghostty
 
   brew install borgbackup
   brew install vorta # borg-backup ui

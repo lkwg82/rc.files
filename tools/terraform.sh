@@ -14,6 +14,9 @@ if ! command -v tofu >/dev/null; then
   tenv tofu install latest && tenv tofu use latest
 fi
 
+# https://tofuutils.github.io/tenv/#environment-variables
+export TENV_AUTO_INSTALL=true
+
 if [[ -d ~/.config/topgrade.d ]] && ! [[ -f ~/.config/topgrade.d/tenv.toml ]] && ! command -v topgrade >/dev/null; then
   cat << EOF > ~/.config/topgrade.d/tenv.toml
     [commands]

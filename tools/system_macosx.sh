@@ -41,4 +41,5 @@ function init_installed_programs(){
   brew install sops # credentials encrypted in git repos
 
   brew install gitlab-ci-local
+  brew install glab # gitlab ci
 }

@@ -137,11 +137,11 @@ function git_clean_merged_branches() {
 export -f git_clean_merged_branches
 
 
-if [[ -z $GLAB_COMPLETION_INSTALLED ]]; then
+if [[ -z $COMPLETION_INSTALLED_GLAB ]]; then
   if command -v glab > /dev/null; then
     # see https://docs.gitlab.com/cli/completion/#bash
     # shellcheck disable=SC1090
     source <(glab completion -s bash)
-    export GLAB_COMPLETION_INSTALLED=1
+    export COMPLETION_INSTALLED_GLAB=1
   fi
 fi

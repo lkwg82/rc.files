@@ -7,9 +7,9 @@ __lazy_install docker-compose
 
 function dc(){
   if command podman-compose --help 2>&1 >/dev/null; then
-	podman-compose $*
+	  podman-compose $*
   else
-	docker compose $*
+	  docker compose $*
   fi
 }
 
@@ -71,4 +71,12 @@ function docker_logs() {
 if [[ ${platform} == "linux" ]]; then
   systemctl --user start podman.socket >&2 2> /dev/null
   export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
+fi
+
+if [[ -z $COMPLETION_INSTALLED_COLIMA ]]; then
+  if command -v colima > /dev/null; then
+    # shellcheck disable=SC1090
+    source <(colima completion bash)
+    export COMPLETION_INSTALLED_COLIMA=1
+  fi
 fi

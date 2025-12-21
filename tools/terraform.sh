@@ -47,7 +47,6 @@ alias tf_providers='terraform providers'
 alias tf_state_ls='terraform state list'
 alias tf_state_mv='terraform state mv'
 alias tf_state_rm='terraform state rm'
-alias tf_taint='terraform taint'
 alias tf_validate='terraform validate'
 
 
@@ -225,6 +224,15 @@ function tf_state_show {
     tf_state_show $(gum spin --title "listing ... " --show-output tofu state list | gum filter)
   else
     tofu state show $* | tee >(to_clipboard)
+  fi
+}
+
+function tf_taint {
+  if [ "$*" == "" ]; then
+    # shellcheck disable=SC2046
+    tf_taint $(gum spin --title "listing ... " --show-output tofu state list | gum filter)
+  else
+    tofu taint $* | tee >(to_clipboard)
   fi
 }
 

@@ -222,9 +222,9 @@ tf_graph() {
 function tf_state_show {
   if [ "$*" == "" ]; then
     # shellcheck disable=SC2046
-    tf_state_show $(gum spin --title "listing ... " --show-output terraform state list | gum filter)
+    tf_state_show $(gum spin --title "listing ... " --show-output tofu state list | gum filter)
   else
-    terraform state show $* | tee >(to_clipboard)
+    tofu state show $* | tee >(to_clipboard)
   fi
 }
 

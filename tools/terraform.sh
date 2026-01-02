@@ -220,19 +220,31 @@ tf_graph() {
 
 function tf_state_show {
   if [ "$*" == "" ]; then
-    # shellcheck disable=SC2046
-    tf_state_show $(gum spin --title "listing ... " --show-output tofu state list | gum filter)
+    # sichere interaktive Auswahl in eine Variable lesen (TTY-Programme nicht in einer rekursiven substitution laufen lassen)
+    local sel
+    sel=$(gum spin --title "listing ... " --show-output -- tofu state list | gum filter)
+    if [[ -z "$sel" ]]; then
+      echo "Abgebrochen. Keine Auswahl getroffen."
+      return 1
+    fi
+    tofu state show "$sel" | tee >(to_clipboard)
   else
-    tofu state show $* | tee >(to_clipboard)
+    tofu state show "$@" | tee >(to_clipboard)
   fi
 }
 
 function tf_taint {
   if [ "$*" == "" ]; then
-    # shellcheck disable=SC2046
-    tf_taint $(gum spin --title "listing ... " --show-output tofu state list | gum filter)
+    # sichere interaktive Auswahl in eine Variable lesen
+    local sel
+    sel=$(gum spin --title "listing ... " --show-output -- tofu state list | gum filter)
+    if [[ -z "$sel" ]]; then
+      echo "Abgebrochen. Keine Auswahl getroffen."
+      return 1
+    fi
+    tofu taint "$sel" | tee >(to_clipboard)
   else
-    tofu taint $* | tee >(to_clipboard)
+    tofu taint "$@" | tee >(to_clipboard)
   fi
 }
 

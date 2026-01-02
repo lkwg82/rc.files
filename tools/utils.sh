@@ -9,7 +9,8 @@ function to_clipboard {
         pbcopy < /dev/stdin
   else
     echo "⚠️ no implemented ... copy urself"
-    cat
+    # uses bat https://github.com/sharkdp/bat
+    cat --paging=never --language "terraform" --plain
   fi
 }
 

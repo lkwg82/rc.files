@@ -242,9 +242,9 @@ function tf_taint {
       echo "Abgebrochen. Keine Auswahl getroffen."
       return 1
     fi
-    tofu taint "$sel" | tee >(to_clipboard)
+    tofu taint "$sel"
   else
-    tofu taint "$@" | tee >(to_clipboard)
+    tofu taint "$@"
   fi
 }
 

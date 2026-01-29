@@ -154,7 +154,7 @@ function tf_plan {
   if [[ $HOSTNAME =~ "bwpm-"* ]]; then
     export CI=true
     # shellcheck disable=SC2155
-    export CI_COMMIT_REF_NAME=$(git branch --show-current)
+    export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME:$(git branch --show-current)}
     # shellcheck disable=SC2155
     # shellcheck disable=SC2046
     local remote=$(git config get branch.$(git branch --show-current).remote)

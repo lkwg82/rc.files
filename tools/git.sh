@@ -125,13 +125,15 @@ function git_clean_merged_branches() {
     fi
 
     # Bestätigung anzeigen
-    gum confirm --default=no "Möchtest du den Branch '$branch' wirklich löschen?" && {
+    if gum confirm --default=no "Möchtest du den Branch '$branch' wirklich löschen?"; then
       # Branch löschen
       git branch -d "$branch" && echo "Branch '$branch' wurde gelöscht."
       # Aktualisierte Liste der Branches
       branches=$(git branch --merged | grep -vE "\*|main|master")
       [ -z "$branches" ] && echo "Keine weiteren gemergten Branches." && keep_asking=false
-    } || echo "Branch '$branch' wurde nicht gelöscht."
+    else
+      echo "Branch '$branch' wurde nicht gelöscht."
+    fi
   done
 }
 export -f git_clean_merged_branches

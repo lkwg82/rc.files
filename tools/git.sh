@@ -147,3 +147,9 @@ if [[ -z $COMPLETION_INSTALLED_GLAB ]]; then
     export COMPLETION_INSTALLED_GLAB=1
   fi
 fi
+
+function glab_repo_open() {
+  glab repo view --output json \
+    | jq '.web_url' \
+    | xargs open
+}

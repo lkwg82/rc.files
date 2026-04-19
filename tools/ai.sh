@@ -14,10 +14,23 @@ opencode_create_facade() {
 
 set -eu
 
+unamestr=$(uname)
+if [[ $unamestr == 'Linux' ]]; then
+  platform='linux'
+elif [[ $unamestr == 'Darwin' ]]; then
+  # shellcheck disable=SC2034
+  platform='darwin'
+fi
+
 # OpenCode Facade Script
 
 # see https://nono.sh/
-alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- /opt/homebrew/bin/opencode --hostname 127.0.0.1 --port 4096 --continue'
+  if [[ ${platform} == "darwin" ]]; then
+    alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- /opt/homebrew/bin/opencode --hostname 127.0.0.1 --port 4096 --continue'
+  else
+    alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- /home/linuxbrew/.linuxbrew/bin/opencode --hostname 127.0.0.1 --port 4096 --continue'
+  fi
+
 shopt -s expand_aliases
 
 if [[ -n "${NO__NONO:-}" ]]; then

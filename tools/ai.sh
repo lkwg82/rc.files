@@ -22,7 +22,6 @@ unamestr=$(uname)
 if [[ $unamestr == 'Linux' ]]; then
   platform='linux'
 elif [[ $unamestr == 'Darwin' ]]; then
-  # shellcheck disable=SC2034
   platform='darwin'
 fi
 

@@ -14,6 +14,10 @@ opencode_create_facade() {
 
 set -eu
 
+if [[ -z ${DEBUG:-} ]]; then
+  set -x
+fi
+
 unamestr=$(uname)
 if [[ $unamestr == 'Linux' ]]; then
   platform='linux'
@@ -26,15 +30,16 @@ fi
 
 # see https://nono.sh/
   if [[ ${platform} == "darwin" ]]; then
-    alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- /opt/homebrew/bin/opencode --hostname 127.0.0.1 --port 4096 --continue'
+    original_path="/opt/homebrew/bin/opencode"
   else
-    alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- /home/linuxbrew/.linuxbrew/bin/opencode --hostname 127.0.0.1 --port 4096 --continue'
+    original_path="/home/linuxbrew/.linuxbrew/bin/opencode"
   fi
+  alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- '${original_path}' --hostname 127.0.0.1 --port 4096 --continue'
 
 shopt -s expand_aliases
 
 if [[ -n "${NO__NONO:-}" ]]; then
-    command opencode "$@"
+    ${original_path} "$@"
 else
     echo "🔧 Setze NO__NONO=1 um originales opencode zu nutzen"
     echo "📍 Quelle: ~/.bashrc.d/tools/ai.sh"

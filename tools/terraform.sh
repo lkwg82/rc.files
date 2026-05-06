@@ -148,58 +148,65 @@ EOF
 }
 
 function tf_plan {
-  # shellcheck disable=SC2155
-  local output=$(mktemp)
+  (
+    # make it faster
+    # https://oneuptime.com/blog/post/2026-03-20-parallelism-flag-opentofu/view
+    export TF_CLI_ARGS_plan="-parallelism=20"
+    echo "INFO increase concurrency of plan: $TF_CLI_ARGS_plan"
 
-  if [[ $HOSTNAME =~ "bwpm-"* ]]; then
-    export CI=true
     # shellcheck disable=SC2155
-    export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME:$(git branch --show-current)}
-    # shellcheck disable=SC2155
-    # shellcheck disable=SC2046
-    local remote=$(git config get branch.$(git branch --show-current).remote)
-    # shellcheck disable=SC2155
-    export CI_PROJECT_URL=$(git remote get-url "$remote" | sed -e 's|.*@ssh.||; s|:|/|; s|^|https://|; s|.git$||')
-    # shellcheck disable=SC2155
-    export CI_PROJECT_DIR=$(git rev-parse --show-toplevel)
-  fi
+    local output=$(mktemp)
 
-  # shellcheck disable=SC2086
-  # shellcheck disable=SC2048
-  terraform plan -detailed-exitcode -out "$output.plan" $* ;
-  exitCode=$?
-  #  -detailed-exitcode         Return detailed exit codes when the command exits.
-  #                             This will change the meaning of exit codes to:
-  #                             0 - Succeeded, diff is empty (no changes)
-  #                             1 - Errored
-  #                             2 - Succeeded, there is a diff
-
-  if [[ $exitCode == 2 ]]; then
-    echo "... transforming into json ..."
-    terraform show -json "$output.plan" > "$output.json"
-
-
-    jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "create") | .address' -r | sort > "$output.create"
-    # shellcheck disable=SC1083
-    if [[ $(wc -l "$output".create | awk {'print $1'} ) -gt 0 ]]; then
-      printf "\e[92m\e[1mElements to be created .\e[0m\n"
-      sed -e 's#^#+ #' "$output.create"
+    if [[ $HOSTNAME =~ "bwpm-"* ]]; then
+      export CI=true
+      # shellcheck disable=SC2155
+      export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME:-$(git branch --show-current)}
+      # shellcheck disable=SC2155
+      # shellcheck disable=SC2046
+      local remote=$(git config get branch.$(git branch --show-current).remote)
+      # shellcheck disable=SC2155
+      export CI_PROJECT_URL=$(git remote get-url "$remote" | sed -e 's|.*@ssh.||; s|:|/|; s|^|https://|; s|.git$||')
+      # shellcheck disable=SC2155
+      export CI_PROJECT_DIR=$(git rev-parse --show-toplevel)
     fi
 
-    jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "delete") | .address' -r | sort > "$output.delete"
-    # shellcheck disable=SC1083
-    if [[ $(wc -l "$output".delete | awk {'print $1'} ) -gt 0 ]]; then
-      printf "\e[91m\e[1mElements to be deleted (or recreated).\e[0m\n"
-      sed -e 's#^#- #'  "$output.delete"
-    fi
+    # shellcheck disable=SC2086
+    # shellcheck disable=SC2048
+    terraform plan -detailed-exitcode -out "$output.plan" $* ;
+    exitCode=$?
+    #  -detailed-exitcode         Return detailed exit codes when the command exits.
+    #                             This will change the meaning of exit codes to:
+    #                             0 - Succeeded, diff is empty (no changes)
+    #                             1 - Errored
+    #                             2 - Succeeded, there is a diff
 
-    jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "update") | .address' -r | sort > "$output.update"
-    # shellcheck disable=SC1083
-    if [[ $(wc -l "$output".update | awk {'print $1'} ) -gt 0 ]]; then
-      printf "\e[93m\e[1mElements to be updated .\e[0m\n"
-      sed -e 's#^# #'  "$output.update"
+    if [[ $exitCode == 2 ]]; then
+      echo "... transforming into json ..."
+      terraform show -json "$output.plan" > "$output.json"
+
+
+      jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "create") | .address' -r | sort > "$output.create"
+      # shellcheck disable=SC1083
+      if [[ $(wc -l "$output".create | awk {'print $1'} ) -gt 0 ]]; then
+        printf "\e[92m\e[1mElements to be created .\e[0m\n"
+        sed -e 's#^#+ #' "$output.create"
+      fi
+
+      jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "delete") | .address' -r | sort > "$output.delete"
+      # shellcheck disable=SC1083
+      if [[ $(wc -l "$output".delete | awk {'print $1'} ) -gt 0 ]]; then
+        printf "\e[91m\e[1mElements to be deleted (or recreated).\e[0m\n"
+        sed -e 's#^#- #'  "$output.delete"
+      fi
+
+      jq < "$output.json" '.resource_changes[] | select(.change.actions[] == "update") | .address' -r | sort > "$output.update"
+      # shellcheck disable=SC1083
+      if [[ $(wc -l "$output".update | awk {'print $1'} ) -gt 0 ]]; then
+        printf "\e[93m\e[1mElements to be updated .\e[0m\n"
+        sed -e 's#^# #'  "$output.update"
+      fi
     fi
-  fi
+  )
 }
 
 tf_graph() {

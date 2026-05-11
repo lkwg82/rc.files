@@ -152,18 +152,23 @@ function tf_plan {
     # make it faster
     # https://oneuptime.com/blog/post/2026-03-20-parallelism-flag-opentofu/view
     export TF_CLI_ARGS_plan="-parallelism=20"
-    echo "INFO increase concurrency of plan: $TF_CLI_ARGS_plan"
+    log_info " increase concurrency of plan: $TF_CLI_ARGS_plan"
 
     # shellcheck disable=SC2155
     local output=$(mktemp)
 
     if [[ $HOSTNAME =~ "bwpm-"* ]]; then
       export CI=true
+      log_info "presetting CI=${CI}"
+
       # shellcheck disable=SC2155
       export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME:-$(git branch --show-current)}
+      log_info "presetting CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}"
+
       # shellcheck disable=SC2155
       # shellcheck disable=SC2046
       local remote=$(git config get branch.$(git branch --show-current).remote)
+
       # shellcheck disable=SC2155
       export CI_PROJECT_URL=$(git remote get-url "$remote" | sed -e 's|.*@ssh.||; s|:|/|; s|^|https://|; s|.git$||')
       # shellcheck disable=SC2155

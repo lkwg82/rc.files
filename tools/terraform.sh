@@ -162,15 +162,32 @@ function tf_plan {
       log_info "presetting CI=${CI}"
 
       # shellcheck disable=SC2155
+      local tf_workspace=$(tofu workspace show)
+      if [[ $tf_workspace =~ ^dev|iat|tst|prd$ ]]; then
+        export CI_COMMIT_REF_NAME="$tf_workspace" # cleans diff in plan
+        log_info "presetting CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME} (specific workspace=branch)"
+      fi
+
+      # shellcheck disable=SC2155
       export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME:-$(git branch --show-current)}
       log_info "presetting CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}"
 
       # shellcheck disable=SC2155
       # shellcheck disable=SC2046
-      local remote=$(git config get branch.$(git branch --show-current).remote)
+      local remote=$(git config get branch."${CI_COMMIT_REF_NAME}".remote)
+      if [[ -z $remote ]]; then
+        log_hint "git remote retrival failed >>"
+        git config list | grep --color branch | grep ".remote="
+        log_hint "git remote retrival failed"
+        remote=$(git config list | grep -E "remote.*url=" | head -n1 | sed -e 's|^remote.||; s|.url=.*||')
+        log_info "falling back to remote=$remote"
+      fi
+      log_info "remote is '$remote'"
 
       # shellcheck disable=SC2155
       export CI_PROJECT_URL=$(git remote get-url "$remote" | sed -e 's|.*@ssh.||; s|:|/|; s|^|https://|; s|.git$||')
+      log_info "presetting CI_PROJECT_URL='$CI_PROJECT_URL'"
+
       # shellcheck disable=SC2155
       export CI_PROJECT_DIR=$(git rev-parse --show-toplevel)
     fi

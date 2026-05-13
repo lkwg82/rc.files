@@ -55,3 +55,13 @@ EOF
     echo "✅ Facade erstellt und ausführbar gemacht"
     echo "💡 Füge $HOME/.opencode/bin zu \$PATH hinzu für globalen Zugriff"
 }
+
+
+# support tokscale
+# see https://github.com/junhoyeo/tokscale#copilot-cli
+if command -v copilot >/dev/null ; then
+  export COPILOT_OTEL_ENABLED=true
+  export COPILOT_OTEL_EXPORTER_TYPE=file
+  mkdir -p "$HOME/.copilot/otel"
+  export COPILOT_OTEL_FILE_EXPORTER_PATH="$HOME/.copilot/otel/copilot-otel-$(date +%Y%m%d-%H%M%S).jsonl"
+fi

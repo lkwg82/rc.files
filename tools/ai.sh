@@ -32,8 +32,9 @@ fi
     original_path="/opt/homebrew/bin/opencode"
   else
     original_path="/home/linuxbrew/.linuxbrew/bin/opencode"
+    nono_extra_args='--read /home/linuxbrew/.linuxbrew/ --read $HOME/.sdkman --allow $HOME/.m2'
   fi
-  alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode -- '${original_path}' --hostname 127.0.0.1 --port 4096 --continue'
+  alias nono_opencode_ide='nono run --profile opencode --allow-cwd --read $HOME/.copilot --read $HOME/ghorg --allow $HOME/.local/state/opencode '${nono_extra_args:-}' -- '${original_path}' --hostname 127.0.0.1 --port 4096 --continue'
 
 shopt -s expand_aliases
 

@@ -6,8 +6,8 @@ __lazy_install git
 
 # https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 
-git config --global alias.ci commit
-git config --global alias.st status
+git config list | grep -q alias.ci= || git config --global alias.ci commit
+git config list | grep -q alias.st= || git config --global alias.st status
 
 # completion
 

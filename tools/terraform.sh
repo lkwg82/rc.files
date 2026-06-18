@@ -360,6 +360,18 @@ EOF
   terraform test $@
 }
 
+function tf_test_watch {
+  while (true); do
+    echo -e "\n----------------------------\n 👀 waiting for changes ... 🫖\n"
+    fswatch --latency 0.2 --one-event --print0 --recursive . \
+      | xargs -0 -I{} git diff --name-only \
+      | sort -u
+
+    # shellcheck disable=SC2068
+    tofu test $@
+  done
+}
+
 function tf_update_latest_terraform_version {
   # shellcheck disable=SC2155
   local lastVersion=$(tfenv list-remote | grep -E "\.[0-9]+$" | head -n1)

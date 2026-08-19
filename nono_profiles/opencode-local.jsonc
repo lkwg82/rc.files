@@ -1,8 +1,8 @@
-{ // see https://nono.sh/docs/cli/features/profile-authoring
+{
+  // see https://nono.sh/docs/cli/features/profile-authoring
   "$schema": "./nono-profile.schema.json",
   "extends": [
-    "opencode",
-    "local-uvx"
+    "opencode"
   ],
   "meta": {
     "name": "opencode-local",
@@ -13,18 +13,19 @@
   "groups": {
     // see https://github.com/nolabs-ai/nono-packs/blob/main/opencode/policy.json
     "include": [
-      "go_runtime"
+      "go_runtime",
+      "python_runtime"
     ]
   },
   "filesystem": {
     "allow": [
       "~/.cache",
-      "~/.local/share/uv",
+      "."
     ],
     "read": [
       "~/.sdkman/candidates/java/current",
       "~/.sdkman/candidates/mvnd/current",
-//      "~/.claude",
+      "~/.claude",
       "~/.config",
       "~/.copilot/skills",
       "~/ghorg",
@@ -33,20 +34,29 @@
       "~/development",
       "~/.bashrc.d"
     ],
-    "write": [],
-    "allow_file": [],
     "read_file": [
-//      "~/.claude/CLAUDE.md",
+      "~/.claude/CLAUDE.md",
       "~/.copilot/copilot-instructions.md",
       "~/global_.gitignore",
       "~/.bashrc"
+    ],
+    "bypass_protection": [
+      "~/.bash_profile"
+    ],
+    "suppress_save_prompt": [
+      "/Users",
+      "~/",
+      "/System",
+      "/Library/Keychains",
+      "/usr"
     ]
-//    "suppress_save_prompt": [
-//      "/Users",
-//      "~/",
-//      "/System",
-//      "/Library/Keychains",
-//      "/usr"
-//    ]
   },
+  "network": {
+    "listen_port_range": [
+      [
+        4096,
+        4099
+      ]
+    ]
+  }
 }

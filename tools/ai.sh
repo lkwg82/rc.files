@@ -14,7 +14,7 @@ opencode_create_facade() {
 
 set -eu
 
-if [[ -z ${DEBUG:-} ]]; then
+if [[ -n ${DEBUG:-} ]]; then
   set -x
 fi
 

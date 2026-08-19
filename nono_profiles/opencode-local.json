@@ -1,0 +1,57 @@
+{
+  "$schema": "file:///Users/larsgohlke/.config/nono/nono-profile.schema.json",
+  "extends": [
+    "opencode",
+    "local-uvx"
+  ],
+  "meta": {
+    "name": "opencode-local",
+    "version": "1.0.0",
+    "description": "Runtime-discovered path additions for opencode",
+    "author": null
+  },
+  "groups": {
+    // see https://github.com/nolabs-ai/nono-packs/blob/main/opencode/policy.json
+    "include": [
+      "go_runtime"
+    ]
+  },
+  "filesystem": {
+    "allow": [
+      "~/.copilot",
+      "~/.cache",
+      "~/.local/share/uv",
+      "~/.local/state/opencode"
+    ],
+    "read": [
+      "~/.sdkman/candidates/java/current",
+      "~/.sdkman/candidates/mvnd/current",
+      "~/.claude",
+      "~/.config",
+      "~/.copilot/skills",
+      "~/ghorg",
+      "~/bin",
+      "~/IdeaProjects",
+      "~/development",
+      "~/.bashrc.d"
+    ],
+    "write": [],
+    "allow_file": [],
+    "read_file": [
+      "~/.claude/CLAUDE.md",
+      "~/.copilot/copilot-instructions.md",
+      "~/global_.gitignore",
+      "~/.bashrc"
+    ],
+    "suppress_save_prompt": [
+      "/Users",
+      "~/",
+      "/System",
+      "/Library/Keychains",
+      "/usr"
+    ]
+  },
+  "workdir": {
+    "access": "none"
+  },
+}

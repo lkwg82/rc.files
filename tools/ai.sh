@@ -58,6 +58,33 @@ EOF
 }
 
 
+
+# see https://github.com/nolabs-ai/nono
+# because brew install nono still returns 0.73 (before namespace migration from always-further to nolabs-ai)
+nono_manual_install() {
+    local version='v0.74.0'
+    local unamestr
+    unamestr=$(uname)
+
+    local target
+    if [[ $unamestr == 'Darwin' ]]; then
+        target='aarch64-apple-darwin'
+    elif [[ $unamestr == 'Linux' ]]; then
+        target="$(uname -m)-unknown-linux-gnu"
+    else
+        echo "❌ Nicht unterstützte Plattform: $unamestr"
+        return 1
+    fi
+
+    local url="https://github.com/nolabs-ai/nono/releases/download/${version}/nono-${version}-${target}.tar.gz"
+    mkdir -p "$HOME/bin"
+
+    echo "⬇️  Lade nono ${version} für ${target} herunter..."
+    curl -fsSL "$url" | tar -xz -C "$HOME/bin"
+    chmod +x "$HOME/bin/nono"
+    echo "✅ nono installiert unter $HOME/bin/nono"
+}
+
 # support tokscale
 # see https://github.com/junhoyeo/tokscale#copilot-cli
 if command -v copilot >/dev/null ; then

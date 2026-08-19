@@ -35,7 +35,8 @@ fi
     nono_extra_args='--read /home/linuxbrew/.linuxbrew/ --read $HOME/.sdkman --allow $HOME/.m2'
   fi
 
-  alias nono_opencode_ide='nono run --profile opencode-local --allow-cwd '${nono_extra_args:-}' -- '${original_path}' --hostname 127.0.0.1 --port 4096 --continue'
+  echo "DEBUG parameters $*"
+  alias nono_opencode_ide='nono run --profile opencode-local --allow-cwd '${nono_extra_args:-}' -- '${original_path}' '$@
 
 shopt -s expand_aliases
 
@@ -47,12 +48,12 @@ else
     echo "🔒 Nutze nono für sicheren opencode-Aufruf:"
     alias nono_opencode_ide
     echo " -------------- delay ------"
-    sleep 2
+    sleep 1
     nono_opencode_ide
 
 fi
 EOF
-    
+
     chmod +x "$facade_path"
     echo "✅ Facade erstellt und ausführbar gemacht"
     echo "💡 Füge $HOME/.opencode/bin zu \$PATH hinzu für globalen Zugriff"

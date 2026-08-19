@@ -52,6 +52,14 @@
     ]
   },
   "network": {
+    "network_profile": "opencode",
+    "allow_domain": [
+      "copilot-api.deutschebahn.ghe.com",
+      "127.0.0.1" // for upstream mcp proxy 1/2
+    ],
+    "open_port": [
+      8080 // for upstream mcp proxy 2/2
+    ],
     "listen_port_range": [
       [
         4096,

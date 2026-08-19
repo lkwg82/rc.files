@@ -1,5 +1,5 @@
-{
-  "$schema": "file:///Users/larsgohlke/.config/nono/nono-profile.schema.json",
+{ // see https://nono.sh/docs/cli/features/profile-authoring
+  "$schema": "./nono-profile.schema.json",
   "extends": [
     "opencode",
     "local-uvx"
@@ -18,15 +18,13 @@
   },
   "filesystem": {
     "allow": [
-      "~/.copilot",
       "~/.cache",
       "~/.local/share/uv",
-      "~/.local/state/opencode"
     ],
     "read": [
       "~/.sdkman/candidates/java/current",
       "~/.sdkman/candidates/mvnd/current",
-      "~/.claude",
+//      "~/.claude",
       "~/.config",
       "~/.copilot/skills",
       "~/ghorg",
@@ -38,20 +36,17 @@
     "write": [],
     "allow_file": [],
     "read_file": [
-      "~/.claude/CLAUDE.md",
+//      "~/.claude/CLAUDE.md",
       "~/.copilot/copilot-instructions.md",
       "~/global_.gitignore",
       "~/.bashrc"
-    ],
-    "suppress_save_prompt": [
-      "/Users",
-      "~/",
-      "/System",
-      "/Library/Keychains",
-      "/usr"
     ]
-  },
-  "workdir": {
-    "access": "none"
+//    "suppress_save_prompt": [
+//      "/Users",
+//      "~/",
+//      "/System",
+//      "/Library/Keychains",
+//      "/usr"
+//    ]
   },
 }

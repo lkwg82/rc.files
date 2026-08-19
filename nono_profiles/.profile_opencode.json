@@ -1,0 +1,112 @@
+{
+  "name": "opencode",
+  "description": "opencode AI coding assistant (registry-managed)",
+  "extends": [
+    "default"
+  ],
+  "security": {
+    "signal_mode": "isolated",
+    "capability_elevation": false
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/.opencode",
+      "$HOME/.config/opencode",
+      "$HOME/.cache/opencode",
+      "$HOME/.local/share/opencode",
+      "$HOME/.local/share/opentui",
+      "$HOME/.local/state/opencode",
+      "$NONO_CONFIG/profile-drafts",
+      "$TMPDIR"
+    ],
+    "read": [
+      "$NONO_PACKAGES",
+      "$NONO_CONFIG/profiles",
+      "$HOME/.agents"
+    ],
+    "write": [],
+    "allow_file": [],
+    "read_file": [
+      "$HOME/Library/Keychains/login.keychain-db"
+    ],
+    "write_file": [],
+    "unix_socket": [],
+    "unix_socket_bind": [],
+    "unix_socket_dir": [],
+    "unix_socket_dir_bind": [],
+    "unix_socket_subtree": [],
+    "unix_socket_subtree_bind": [],
+    "deny": [],
+    "bypass_protection": [
+      "$HOME/Library/Keychains/login.keychain-db"
+    ],
+    "suppress_save_prompt": [
+      "$NONO_PACKAGES/always-further/opencode"
+    ]
+  },
+  "groups": {
+    "include": [
+      "deny_credentials",
+      "deny_keychains_macos",
+      "deny_keychains_linux",
+      "deny_browser_data_macos",
+      "deny_browser_data_linux",
+      "deny_macos_private",
+      "deny_shell_history",
+      "deny_shell_configs",
+      "system_read_macos",
+      "system_read_linux_core",
+      "system_write_macos",
+      "system_write_linux",
+      "user_tools",
+      "homebrew_macos",
+      "homebrew_linux",
+      "dangerous_commands",
+      "dangerous_commands_macos",
+      "dangerous_commands_linux",
+      "node_runtime",
+      "rust_runtime",
+      "python_runtime",
+      "user_caches_macos",
+      "nix_runtime",
+      "git_config",
+      "unlink_protection"
+    ],
+    "exclude": []
+  },
+  "network": {
+    "block": false,
+    "network_profile": null,
+    "allow_domain": [],
+    "credentials": [],
+    "open_port": [],
+    "listen_port": [],
+    "no_proxy": [],
+    "upstream_proxy": null,
+    "upstream_bypass": []
+  },
+  "workdir": {
+    "access": "readwrite"
+  },
+  "rollback": {
+    "exclude_patterns": [
+      "node_modules",
+      ".next",
+      "__pycache__",
+      "target",
+      ".opencode"
+    ],
+    "exclude_globs": [
+      "*.tmp.[0-9]*.[0-9]*"
+    ]
+  },
+  "open_urls": {
+    "allow_origins": [
+      "https://auth.openai.com",
+      "https://claude.ai",
+      "https://github.com"
+    ],
+    "allow_localhost": true
+  },
+  "allow_launch_services": true
+}

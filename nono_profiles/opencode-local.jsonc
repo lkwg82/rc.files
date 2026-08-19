@@ -55,13 +55,16 @@
     "network_profile": "opencode",
     "allow_domain": [
       "copilot-api.deutschebahn.ghe.com",
-      "127.0.0.1" // for upstream mcp proxy 1/2
+      // for upstream mcp proxy 1/2
+      "127.0.0.1"
     ],
     "open_port": [
-      8080 // for upstream mcp proxy 2/2
+      // for upstream mcp proxy 2/2
+      8080
     ],
-    "listen_port_range": [
+    "open_port_range": [
       [
+        // needed for opencode --hostname 127.0.0.1 --port 4097
         4096,
         4099
       ]

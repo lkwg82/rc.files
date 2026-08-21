@@ -58,10 +58,10 @@
       // for upstream mcp proxy 1/2
       "127.0.0.1"
     ],
-    "open_port": [
+    "open_port": [ 0 ], // only for macosx
       // for upstream mcp proxy 2/2
-      8080
-    ],
+//      8080
+//    ],
     "open_port_range": [
       [
         // needed for opencode --hostname 127.0.0.1 --port 4097

@@ -31,6 +31,7 @@ fi
 
 # shellcheck disable=SC2155
 export BREW_PREFIX=$(brew --prefix)
+export HOMEBREW_NO_ANALYTICS=1
 
 alias _info='echo -n "🐛"; echo'
 function __lazy_install() {

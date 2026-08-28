@@ -1,0 +1,23 @@
+{
+  // see https://nono.sh/docs/cli/features/profile-authoring
+  "$schema": "./nono-profile.schema.json",
+  "meta": {
+    "name": "macosx.swift-local"
+  },
+  "filesystem": {
+    "allow": [
+      {
+        "path": "/Library/Developer/CommandLineTools",
+        "when": "macos"
+      },
+      {
+        "path": "$HOME/Library/org.swift.swiftpm",
+        "when": "macos"
+      },
+      {
+        "path": "$HOME/.swiftpm",
+        "when": "macos"
+      }
+    ]
+  }
+}

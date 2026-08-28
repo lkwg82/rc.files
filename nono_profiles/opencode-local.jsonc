@@ -2,7 +2,8 @@
   // see https://nono.sh/docs/cli/features/profile-authoring
   "$schema": "./nono-profile.schema.json",
   "extends": [
-    "opencode"
+    "opencode",
+    "macosx-swift-local"
   ],
   "meta": {
     "name": "opencode-local",
@@ -58,10 +59,13 @@
       // for upstream mcp proxy 1/2
       "127.0.0.1"
     ],
-    "open_port": [ 0 ], // only for macosx
-      // for upstream mcp proxy 2/2
-//      8080
-//    ],
+    "open_port": [
+      0
+    ],
+    // only for macosx
+    // for upstream mcp proxy 2/2
+    //      8080
+    //    ],
     "open_port_range": [
       [
         // needed for opencode --hostname 127.0.0.1 --port 4097

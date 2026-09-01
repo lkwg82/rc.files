@@ -410,6 +410,8 @@ function tf_workspace {
   terraform init -upgrade # since terraform v0.13
 }
 
+
+
 function tf___clean_empty_workspaces {
   # shellcheck disable=SC2155
   local currentWorkspace=$(terraform workspace show)

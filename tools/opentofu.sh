@@ -226,6 +226,14 @@ function tf_plan {
   )
 }
 
+function tf_providers_short {
+  tofu providers  | grep provider \
+    | sed -e 's|.*provider\[||g; s|\].*||' \
+    | sort -u \
+    | awk -F/ '{ printf "%-20s %s\n", $NF, $0 }' \
+    | sort
+}
+
 function tf_graph {
   # shellcheck disable=SC2155
   local plan=$(mktemp)

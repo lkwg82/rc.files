@@ -226,7 +226,7 @@ function tf_plan {
   )
 }
 
-tf_graph() {
+function tf_graph {
   # shellcheck disable=SC2155
   local plan=$(mktemp)
   # shellcheck disable=SC2155

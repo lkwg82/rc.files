@@ -144,6 +144,9 @@ EOF
 
 function tf_plan {
   (
+    if [[ -n ${DEBUG:-} ]]; then
+      set -x
+    fi
     # make it faster
     # https://oneuptime.com/blog/post/2026-03-20-parallelism-flag-opentofu/view
     export TF_CLI_ARGS_plan="-parallelism=20"

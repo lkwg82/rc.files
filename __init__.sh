@@ -28,6 +28,7 @@ pushd ~/.bashrc.d > /dev/null || exitAndShow
 source init_tools.sh
 
 for file in tools/*.sh; do
+  echo >&2 "$(date +%H:%M:%S) DEBUG source $file"
   # shellcheck disable=SC1090
   source "$file"
 done

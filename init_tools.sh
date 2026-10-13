@@ -6,6 +6,8 @@ function initMacosX() {
   ssh-add --apple-use-keychain
 }
 
+echo >&2 "$(date +%H:%M:%S) DEBUG source tools"
+
 # shellcheck disable=SC2154
 if [[ ${platform} == "darwin" ]]; then
   if [[ ${architecture} == "arm64" ]] && [[ -f /opt/homebrew/bin/brew ]]; then

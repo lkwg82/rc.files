@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 function __setup_nvm(){
   local path=$1
 
@@ -23,7 +22,7 @@ function __setup_nvm(){
 
 # shellcheck disable=SC2154
 [[ ${platform} == "linux" ]] &&  __setup_nvm "/home/linuxbrew/.linuxbrew/"
-[[ ${platform} == "darwin" ]] &&  __setup_nvm "/usr/local/"
+[[ ${platform} == "darwin" ]] &&  __setup_nvm "/opt/homebrew"
 
 (
   # to handle things in working dir

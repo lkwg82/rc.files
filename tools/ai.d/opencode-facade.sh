@@ -23,8 +23,22 @@ fi
     nono_extra_args='--read /home/linuxbrew/.linuxbrew/ --read $HOME/.sdkman --allow $HOME/.m2'
   fi
 
+  if version_output=$("$original_path" --version 2>/dev/null); then
+    if [[ "$version_output" =~ v?([0-9]+)(\.|$) ]]; then
+      opencode_major_version="${BASH_REMATCH[1]}"
+    else
+      opencode_major_version="unknown"
+    fi
+  else
+    opencode_major_version="unknown"
+  fi
+
   echo "DEBUG parameters $*"
-  alias nono_opencode_ide='nono run --profile opencode-local --allow-cwd '${nono_extra_args:-}' -- '${original_path}' '$@
+  if [[ "$opencode_major_version" == "2" ]]; then
+    alias nono_opencode_ide='nono run --profile opencode       --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '$@
+  else
+    alias nono_opencode_ide='nono run --profile opencode-local --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '$@
+  fi
 
 shopt -s expand_aliases
 

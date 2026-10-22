@@ -9,8 +9,15 @@ fi
 unamestr=$(uname)
 if [[ $unamestr == 'Linux' ]]; then
   platform='linux'
+  homebrew_bin='/home/linuxbrew/.linuxbrew/bin'
 elif [[ $unamestr == 'Darwin' ]]; then
   platform='darwin'
+  homebrew_bin='/opt/homebrew/bin'
+fi
+
+# in the ide sometime homebrew is not yet in the PATH
+if [[ -n ${homebrew_bin:-} ]] && [[ ":${PATH:-}:" != *":${homebrew_bin}:"* ]]; then
+  export PATH="${homebrew_bin}${PATH:+:${PATH}}"
 fi
 
 # OpenCode Facade Script

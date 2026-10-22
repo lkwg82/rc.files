@@ -42,7 +42,7 @@ fi
 
   echo "DEBUG parameters $*"
   if [[ "$opencode_major_version" == "2" ]]; then
-    alias nono_opencode_ide='nono run --profile opencode       --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '$@
+    alias nono_opencode_ide='nono run --profile opencode       --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' --standalone '$@
   else
     alias nono_opencode_ide='nono run --profile opencode-local --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '$@
   fi

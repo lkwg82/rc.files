@@ -2,7 +2,7 @@
   // see https://nono.sh/docs/cli/features/profile-authoring
   "$schema": "./nono-profile.schema.json",
   "extends": [
-    "opencode",
+    "nolabs-ai/opencode",
     "macosx-swift-local"
   ],
   "meta": {
@@ -59,6 +59,9 @@
       // for upstream mcp proxy 1/2
       "127.0.0.1"
     ],
+//    "deny_domain": [
+//      "models.opencode.ai"
+//    ],
     "open_port": [
       0
     ],
@@ -72,6 +75,10 @@
         4096,
         4099
       ]
-    ]
+    ],
+//    "upstream_proxy": "localhost:3128",
+//    "upstream_bypass": [
+//      "copilot-api.deutschebahn.ghe.com"
+//    ]
   }
 }

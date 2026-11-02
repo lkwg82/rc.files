@@ -48,7 +48,7 @@ fi
     fi
     alias nono_opencode_ide='nono run --profile nolabs-ai/opencode       --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '"${standalone_arg}"' '$@
   else
-    alias nono_opencode_ide='nono run --profile opencode-local --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '$@
+    alias nono_opencode_ide='nono run --profile opencode-local           --allow-cwd '"${nono_extra_args:-}"' -- '${original_path}' '$@
   fi
 
 shopt -s expand_aliases

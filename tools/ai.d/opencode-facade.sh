@@ -6,6 +6,10 @@ if [[ -n ${DEBUG:-} ]]; then
   set -x
 fi
 
+echo -e "\nENV\n"
+env | sort
+echo
+
 unamestr=$(uname)
 if [[ $unamestr == 'Linux' ]]; then
   platform='linux'
@@ -23,10 +27,8 @@ fi
 # OpenCode Facade Script
 
 # see https://nono.sh/
-  if [[ ${platform} == "darwin" ]]; then
-    original_path="/opt/homebrew/bin/opencode"
-  else
-    original_path="/home/linuxbrew/.linuxbrew/bin/opencode"
+  original_path="${homebrew_bin}/opencode"
+  if [[ ${platform} != "darwin" ]]; then
     nono_extra_args='--read /home/linuxbrew/.linuxbrew/ --read $HOME/.sdkman --allow $HOME/.m2'
   fi
 

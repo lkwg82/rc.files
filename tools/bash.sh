@@ -65,3 +65,11 @@ complete -F _ssh ssh
 if [[ -r /usr/share/bash-completion/completions/systemctl ]]; then
     . /usr/share/bash-completion/completions/systemctl && complete -F _systemctl systemctl
 fi
+
+# install bash completion
+# see https://developer.atlassian.com/cloud/acli/guides/enable-shell-autocomplete/
+if [[ ! -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]; then
+  brew install bash-completion@2
+fi
+
+. "$(brew --prefix)/etc/profile.d/bash_completion.sh"

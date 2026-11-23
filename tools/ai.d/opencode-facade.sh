@@ -6,9 +6,9 @@ if [[ -n ${DEBUG:-} ]]; then
   set -x
 fi
 
-echo -e "\nENV\n"
-env | sort
-echo
+#echo -e "\nENV\n"
+#env | sort
+#echo
 
 unamestr=$(uname)
 if [[ $unamestr == 'Linux' ]]; then

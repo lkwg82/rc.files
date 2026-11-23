@@ -21,6 +21,7 @@
   "filesystem": {
     "allow": [
       "~/.cache",
+      "~/.terraform.d/", // plugin provider cache
       "."
     ],
     "read": [
@@ -39,7 +40,8 @@
       "~/.claude/CLAUDE.md",
       "~/.copilot/copilot-instructions.md",
       "~/global_.gitignore",
-      "~/.bashrc"
+      "~/.bashrc",
+      "~/.tofurc"
     ],
     "bypass_protection": [
       "~/.bash_profile"
@@ -56,29 +58,18 @@
     "network_profile": "opencode",
     "allow_domain": [
       "copilot-api.deutschebahn.ghe.com",
-      // for upstream mcp proxy 1/2
-      "127.0.0.1"
+      "127.0.0.1", // for mcp proxy
+      "bahnhub.tech.rz.db.de" // artifactory
     ],
-//    "deny_domain": [
-//      "models.opencode.ai"
-//    ],
     "open_port": [
       0
     ],
-    // only for macosx
-    // for upstream mcp proxy 2/2
-    //      8080
-    //    ],
     "open_port_range": [
       [
         // needed for opencode --hostname 127.0.0.1 --port 4097
         4096,
         4099
       ]
-    ],
-//    "upstream_proxy": "localhost:3128",
-//    "upstream_bypass": [
-//      "copilot-api.deutschebahn.ghe.com"
-//    ]
+    ]
   }
 }

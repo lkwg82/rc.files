@@ -1,28 +1,12 @@
 #!/bin/bash
 
-if ! command -v terraform >/dev/null; then
-  echo "install terraform via tenv"
-  brew install tenv
-  # install latest
-  tenv tf install latest && tenv tf use latest
-fi
-
 if ! command -v tofu >/dev/null; then
-  echo "install tofu via tenv"
-  brew install tenv
-  # install latest
-  tenv tofu install latest && tenv tofu use latest
+  echo "install tofu"
+  brew install opentofu
 fi
 
-# https://tofuutils.github.io/tenv/#environment-variables
-export TENV_AUTO_INSTALL=true
-
-if [[ -d ~/.config/topgrade.d ]] && ! [[ -f ~/.config/topgrade.d/tenv.toml ]] && ! command -v topgrade >/dev/null; then
-  cat << EOF > ~/.config/topgrade.d/tenv.toml
-    [commands]
-    "Terraform: tenv" = "tenv tf install latest && tenv tf use latest"
-    "Tofu: tenv" = "tenv tofu install latest && tenv tofu use latest"
-EOF
+if [[ -f ~/.config/topgrade.d/tenv.toml ]] ; then
+  rm ~/.config/topgrade.d/tenv.toml
 fi
 
 alias terraform=tofu # migrate to tofu

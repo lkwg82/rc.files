@@ -21,7 +21,7 @@
   "filesystem": {
     "allow": [
       "~/.cache",
-      "~/.terraform.d/", // plugin provider cache
+      "~/.terraform.d",  // plugin provider cache
       "."
     ],
     "read": [
@@ -41,10 +41,13 @@
       "~/.copilot/copilot-instructions.md",
       "~/global_.gitignore",
       "~/.bashrc",
-      "~/.tofurc"
+      "~/.tofurc",
+      "~/.inputrc",
+      "~/.vimrc"
     ],
     "bypass_protection": [
-      "~/.bash_profile"
+      "~/.bash_profile",
+      "~/.terraform.d"
     ],
     "suppress_save_prompt": [
       "/Users",
@@ -52,14 +55,19 @@
       "/System",
       "/Library/Keychains",
       "/usr"
+    ],
+    "unix_socket_dir": [
+      "~/.cache/opencode/tmp"
     ]
   },
   "network": {
     "network_profile": "opencode",
     "allow_domain": [
       "copilot-api.deutschebahn.ghe.com",
-      "127.0.0.1", // for mcp proxy
-      "bahnhub.tech.rz.db.de" // artifactory
+      "127.0.0.1",
+      // for mcp proxy
+      "bahnhub.tech.rz.db.de"
+      // artifactory
     ],
     "open_port": [
       0
